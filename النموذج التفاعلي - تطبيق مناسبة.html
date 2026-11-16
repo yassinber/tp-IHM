@@ -1,0 +1,732 @@
+iewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>نموذج مُناسَبة التفاعلي</title>
+</head>
+<body style="margin:0">
+<title>نموذج مُناسَبة التفاعلي</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: a studio "test bench" — device on one side, test-path checklist on the other. Single light look (the app is light-only). */
+:root{
+  color-scheme:light;
+  --p:#5B3FD6;--p-700:#4328B0;--p-50:#F1EDFF;--p-100:#E2DAFF;
+  --ink:#1E1B2E;--muted:#5F5B70;--line:#E4E1EC;--bg:#F7F6FB;--soft:#EEECF4;--card:#FFFFFF;
+  --ok:#15803D;--ok-50:#DCFCE7;--warn:#B45309;--warn-50:#FEF3C7;--err:#B91C1C;--err-50:#FEE2E2;--info:#1D4ED8;--info-50:#DBEAFE;
+  --accent:#F59E0B;--bench:#E9E6F2;--frame:#17151F;
+  --font:'Cairo','Segoe UI',Tahoma,sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bench);color:var(--ink);font-family:var(--font)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+#page{display:flex;gap:28px;justify-content:center;align-items:flex-start;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;display:block}
+.i.s{width:14px;height:14px}.i.l{width:24px;height:24px}.i.xl{width:40px;height:40px;stroke-width:1.6}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- bench panel ---------- */
+.panel{width:330px;min-width:0;display:flex;flex-direction:column;gap:14px;font-size:13.5px;line-height:1.6}
+.panel h1{font-size:22px;font-weight:800;margin:0;text-wrap:balance;color:var(--p-700)}
+.panel p{margin:0;color:var(--muted)}
+.pbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.pbox h2{font-size:12px;letter-spacing:.04em;color:var(--muted);margin:0;font-weight:700}
+.switch{display:flex;background:var(--soft);border-radius:10px;padding:3px}
+.switch button{flex:1;padding:7px 4px;border-radius:8px;font-weight:700;color:var(--muted);font-size:13px}
+.switch button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(30,27,46,.14)}
+.plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.plist li{display:flex;gap:8px;align-items:flex-start}
+.pdot{width:20px;height:20px;border-radius:50%;border:2px solid #C9C5D6;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;font-size:10px;font-weight:800;color:var(--muted)}
+.pdot.half{border-color:var(--accent);color:var(--warn)}
+.pdot.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.prog{font-weight:800;color:var(--ok)}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lnkbtn{color:var(--p-700);font-weight:700;font-size:13px}
+.steps{margin:0;padding-right:18px;color:var(--ink)}
+
+/* ---------- device ---------- */
+.device{position:relative;flex:none}
+.device.phone{width:390px;height:800px;border:12px solid var(--frame);border-radius:48px;overflow:hidden;box-shadow:0 18px 40px rgba(30,27,46,.25);background:var(--bg)}
+.device.wide{width:max(760px,min(1080px,calc(100vw - 400px)));height:740px;border:1px solid #CFCBDB;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(30,27,46,.18);background:var(--bg)}
+@media (max-width:760px){
+  .device.phone,.device.wide{width:100%;height:calc(100dvh - 48px);min-height:560px;border-width:1px;border-color:#CFCBDB;border-radius:18px}
+  .panel{width:100%}
+}
+
+/* ---------- app (sizes scale with --u for the clarity mode) ---------- */
+.app{--u:1px;position:relative;height:100%;display:flex;flex-direction:column;background:var(--bg);font-size:calc(14*var(--u));line-height:1.5;overflow:hidden}
+.app.clear{--u:1.32px;--line:#9F9AB3;--muted:#3F3B50}
+.app.wide{flex-direction:row}
+.sb{height:30px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px;font-weight:700;background:var(--card)}
+.sbi{display:flex;gap:5px;align-items:center}.sbi i{display:block;width:18px;height:9px;border:1.5px solid var(--ink);border-radius:3px}
+.ab{display:flex;align-items:center;gap:6px;padding:6px 12px 10px;background:var(--card);border-bottom:1px solid var(--line);flex:none}
+.ab h1,.ab h2{font-size:calc(17*var(--u));font-weight:800;flex:1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ab.big{border-bottom:0}.ab.big h1{font-size:calc(20*var(--u))}
+.ib{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink);position:relative;flex:none}
+.ib:hover{background:var(--soft)}
+.ib.dot::after{content:"";position:absolute;top:9px;left:10px;width:8px;height:8px;border-radius:50%;background:var(--err);box-shadow:0 0 0 2px var(--card)}
+.ct{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 14px 18px;display:flex;flex-direction:column;gap:11px;min-height:0}
+.foot-cta{flex:none;padding:10px 14px;background:var(--card);border-top:1px solid var(--line);display:flex;gap:8px;align-items:center}
+.foot-cta>.btn{flex:1}
+.tb{height:64px;flex:none;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center}
+.tb button{display:flex;flex-direction:column;align-items:center;font-size:calc(11*var(--u));color:var(--muted);gap:2px;width:60px;font-weight:600}
+.tb button[aria-current="page"]{color:var(--p);font-weight:800}
+.fab{width:56px!important;height:56px;border-radius:50%;background:var(--p);color:#fff!important;display:flex;align-items:center;justify-content:center;margin-top:-30px;box-shadow:0 6px 14px rgba(91,63,214,.45);border:4px solid var(--card)!important}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border-radius:12px;font-weight:700;font-size:calc(14*var(--u));padding:0 14px;white-space:nowrap}
+.app.clear .btn{min-height:56px}
+.btn.pri{background:var(--p);color:#fff}.btn.pri:hover{background:var(--p-700)}
+.btn.sec{background:var(--p-50);color:var(--p-700)}
+.btn.out{border:1.5px solid var(--line);background:var(--card)}
+.btn.dan{background:var(--err);color:#fff}
+.btn.wrn{background:var(--warn);color:#fff}
+.btn.ghost{color:var(--p-700)}
+.btn.sm{min-height:34px;font-size:calc(12.5*var(--u));padding:0 11px;border-radius:9px}
+.btn:disabled{background:var(--soft);color:#9C98AC;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:calc(11.5*var(--u));font-weight:700;white-space:nowrap;line-height:1.6}
+.chip.ok{background:var(--ok-50);color:var(--ok)}.chip.warn{background:var(--warn-50);color:var(--warn)}.chip.err{background:var(--err-50);color:var(--err)}.chip.info{background:var(--info-50);color:var(--info)}.chip.neu{background:var(--soft);color:var(--muted)}.chip.p{background:var(--p-50);color:var(--p-700)}
+button.chip{cursor:pointer}
+.bar{height:8px;background:var(--soft);border-radius:9px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--p);border-radius:9px;transition:width .3s}
+.bar.ok>span{background:var(--ok)}.bar.warn>span{background:var(--warn)}.bar.err>span{background:var(--err)}
+.lbl{display:block;font-size:calc(12.5*var(--u));font-weight:700;margin-bottom:4px}.lbl em{color:var(--err);font-style:normal}
+.inp{width:100%;min-height:46px;border:1.5px solid #D5D1E0;border-radius:11px;background:var(--card);padding:0 12px;font-size:calc(14.5*var(--u))}
+textarea.inp{padding:10px 12px;min-height:80px;resize:vertical}
+.inp:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px var(--p-50)}
+.inp.error{border-color:var(--err);box-shadow:0 0 0 3px var(--err-50)}
+.help{font-size:calc(12*var(--u));color:var(--muted);margin-top:3px}
+.help.err{color:var(--err);display:flex;gap:4px;align-items:flex-start;font-weight:600}
+.seg{display:flex;background:var(--soft);border-radius:11px;padding:3px}
+.seg button{flex:1;text-align:center;padding:7px 2px;border-radius:9px;font-size:calc(13*var(--u));font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.li:last-child{border-bottom:0}
+.li.hl{background:var(--warn-50);margin:0 -12px;padding:9px 12px;border-radius:10px}
+.av{width:34px;height:34px;border-radius:50%;background:var(--p-50);color:var(--p-700);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:calc(13*var(--u));flex:none}
+.grow{flex:1;min-width:0}
+.ts{font-size:calc(12*var(--u));color:var(--muted)}
+.b{font-weight:700}
+.sec-t{display:flex;justify-content:space-between;align-items:center;font-size:calc(14.5*var(--u));font-weight:800;margin:2px 0 -3px}
+.flex{display:flex;align-items:center;gap:8px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wrap{display:flex;flex-wrap:wrap;gap:7px}
+.tabs{display:flex;border-bottom:1px solid var(--line);background:var(--card);flex:none;overflow-x:auto}
+.tabs button{flex:1;text-align:center;padding:10px 6px 9px;font-size:calc(13*var(--u));color:var(--muted);font-weight:600;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--p-700);border-bottom-color:var(--p);font-weight:800}
+.cb{width:24px;height:24px;border:2px solid #A9A4BC;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--card);color:#fff}
+.cb[aria-checked="true"]{background:var(--ok);border-color:var(--ok)}
+.strike{text-decoration:line-through;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 6px;text-align:center;font-size:calc(12*var(--u));color:var(--muted)}
+.kpi b{display:block;font-size:calc(18*var(--u));color:var(--ink);line-height:1.3;font-variant-numeric:tabular-nums}
+button.kpi{cursor:pointer}button.kpi[aria-pressed="true"]{border-color:var(--p);box-shadow:0 0 0 2px var(--p-100)}
+.hero{background:linear-gradient(135deg,#5B3FD6,#7B61F0);color:#fff;border:0;text-align:right;width:100%;display:block}
+.hero .chip{background:rgba(255,255,255,.22);color:#fff}
+.banner{display:flex;gap:8px;align-items:flex-start;padding:9px 11px;border-radius:11px;font-size:calc(12.5*var(--u));line-height:1.5}
+.banner.warn{background:var(--warn-50);color:#7C2D12}.banner.err{background:var(--err-50);color:#7F1D1D}.banner.info{background:var(--info-50);color:#1E3A8A}.banner.ok{background:var(--ok-50);color:#14532D}
+.step{display:flex;gap:5px}.step span{flex:1;height:5px;border-radius:5px;background:var(--soft)}.step span.on{background:var(--p)}
+.typegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tcard{border:1.5px solid var(--line);border-radius:12px;background:var(--card);padding:10px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:calc(12.5*var(--u));font-weight:600;color:var(--muted)}
+.tcard[aria-checked="true"]{border-color:var(--p);background:var(--p-50);color:var(--p-700);font-weight:800}
+.ck{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;font-size:calc(13*var(--u));background:var(--card);font-weight:600;min-height:36px}
+.ck[aria-pressed="true"],.ck[aria-checked="true"]{border-color:var(--p);background:var(--p-50);color:var(--p-700)}
+.stepper{display:flex;align-items:center;border:1.5px solid #D5D1E0;border-radius:11px;background:var(--card);overflow:hidden;height:46px}
+.stepper button{width:52px;height:100%;font-size:20px;font-weight:700;color:var(--p-700)}
+.stepper b{flex:1;text-align:center;font-size:calc(16*var(--u));border-inline:1px solid var(--line);line-height:46px}
+.toggle{width:44px;height:26px;border-radius:13px;background:#CFCBDB;position:relative;flex:none}
+.toggle::after{content:"";position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:right .2s}
+.toggle[aria-checked="true"]{background:var(--p)}.toggle[aria-checked="true"]::after{right:21px}
+.stars{display:flex;gap:6px;justify-content:center}
+.stars button{color:#CFCBDB}.stars button.on{color:var(--accent)}
+.stars .i{width:34px;height:34px}.stars button.on .i{fill:var(--accent)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.cal .h{font-size:calc(11*var(--u));color:var(--muted);font-weight:700;padding:3px 0}
+.cal button{height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-size:calc(13.5*var(--u));font-variant-numeric:tabular-nums}
+.cal button.out{color:#B8B4C6}
+.cal button.today{border:2px solid var(--p);color:var(--p-700);font-weight:800}
+.cal button[aria-pressed="true"]{background:var(--p);color:#fff;font-weight:800}
+.cal .dots{display:flex;gap:2px;height:6px;margin-top:2px}.cal .dots i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:block}.cal .dots i.r{background:var(--err)}
+.cal button[aria-pressed="true"] .dots i{background:#fff}
+.legend{display:flex;gap:14px;font-size:calc(11.5*var(--u));color:var(--muted)}.legend i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:4px}
+.agenda{display:flex;align-items:center;gap:10px;width:100%;text-align:right;padding:10px 12px;border-right-width:5px}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:20px}
+.empty .bub{width:110px;height:110px;border-radius:50%;background:var(--p-50);display:flex;align-items:center;justify-content:center;color:var(--p)}
+.scrim{position:absolute;inset:0;background:rgba(20,17,33,.5);display:flex;flex-direction:column;justify-content:flex-end;z-index:20;animation:fade .15s}
+.scrim.center{justify-content:center;align-items:center}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(30px)}}
+.sheet{background:var(--card);border-radius:22px 22px 0 0;width:100%;padding:10px 16px 16px;display:flex;flex-direction:column;gap:11px;max-height:90%;overflow-y:auto;animation:up .2s}
+.wide .scrim{justify-content:center;align-items:center}
+.wide .sheet{width:460px;border-radius:18px}
+.grab{width:42px;height:5px;border-radius:5px;background:#CFCBDB;margin:0 auto}
+.dialog{background:var(--card);border-radius:18px;padding:18px;width:min(88%,420px);display:flex;flex-direction:column;gap:10px;animation:up .2s}
+.dialog h3{font-size:calc(16*var(--u));margin:0}
+.dialog p{font-size:calc(13*var(--u));color:var(--muted);margin:0;line-height:1.6}
+.dico{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.mrow{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line);font-weight:700;width:100%;text-align:right}
+.snack{position:absolute;bottom:78px;left:12px;right:12px;background:#1E1B2E;color:#fff;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:9px;font-size:calc(13*var(--u));z-index:30;box-shadow:0 8px 18px rgba(0,0,0,.28);animation:up .2s}
+.wide .snack{bottom:20px;left:20px;right:auto;min-width:340px}
+.snack .lnk{color:#C9BCFF;font-weight:800;margin-right:auto;padding:4px}
+.snack .ok{color:#86EFAC}
+.amount{text-align:center;font-size:calc(32*var(--u));font-weight:800;border:0;border-bottom:2.5px solid var(--p);border-radius:0;width:100%;background:transparent;font-variant-numeric:tabular-nums;padding:4px}
+.amount:focus{outline:none}
+.amount.over{border-bottom-color:var(--warn)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- wide (desktop) ---------- */
+.side{width:220px;flex:none;background:var(--card);border-left:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:3px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;color:var(--p-700);margin:0 4px 14px}
+.logo i{width:30px;height:30px;border-radius:9px;background:var(--p);display:flex;align-items:center;justify-content:center;color:#fff}
+.side .nav{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:10px;color:var(--muted);font-weight:600;width:100%;text-align:right}
+.side .nav:hover{background:var(--soft)}
+.side .nav[aria-current="page"]{background:var(--p-50);color:var(--p-700);font-weight:800}
+.wmain{flex:1;display:flex;flex-direction:column;min-width:0}
+.wmain .ct{padding:18px 24px}
+.wbody{display:flex;flex-direction:column;gap:12px;width:100%;max-width:980px;margin:0 auto}
+.wmain .foot-cta{justify-content:flex-start}
+.wmain .foot-cta>.btn{flex:none;min-width:200px}
+.dk-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.dk-kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;align-items:center;gap:11px}
+.dk-kpi .ico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+.dk-kpi b{font-size:22px;display:block;line-height:1.2}.dk-kpi small{font-size:12px;color:var(--muted)}
+.wgrid{display:grid;grid-template-columns:2.2fr 1fr;gap:14px;align-items:start}
+.tblw{overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:right;color:var(--muted);font-weight:700;padding:9px 10px;border-bottom:1px solid var(--line);font-size:12px;background:#FBFAFD}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tbody tr{cursor:pointer}.tbl tbody tr:hover{background:#FBFAFD}
+.kan{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start}
+.col{background:var(--soft);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:240px;transition:background .15s}
+.col.over{background:var(--p-50);outline:2px dashed var(--p)}
+.col h3{font-size:14px;margin:0 2px 2px;display:flex;justify-content:space-between}
+.tk{background:var(--card);border-radius:11px;padding:9px 10px;border:1px solid var(--line);display:flex;flex-direction:column;gap:6px;cursor:grab}
+.tk:active{cursor:grabbing}
+.tk.late{border-color:#FCA5A5}
+.tk.hl{box-shadow:0 0 0 3px var(--accent)}
+.wide .ab{padding:14px 24px 12px}
+.wide .tabs{padding:0 18px}
+.wide .tabs button{flex:none;padding:10px 16px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="home" viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 13 15 13 15 22"/></symbol>
+  <symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="users" v><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="wallet" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="15" rx="2"/><path d="M16 12h2"/><path d="M2 9h20"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="back" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+  <symbol id="fwd" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+  <symbol id="chev" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="chevd" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="tasks" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="wifioff" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></symbol>
+  <symbol id="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></symbol>
+  <symbol id="trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+  <symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+  <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+  <symbol id="more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="dots" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
+  <symbol id="cap" viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></symbol>
+  <symbol id="mega" viewBox="0 0 24 24"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+  <symbol id="present" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+  <symbol id="sync" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+  <symbol id="drag" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/></symbol>
+  <symbol id="eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="archive" viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></symbol>
+</svg>
+
+<div id="page" dir="rtl" lang="ar">
+  <div id="app" class="device phone" aria-label="النموذج الأولي"></div>
+  <aside class="panel" id="panel" aria-label="لوحة الاختبار"></aside>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const TODAY='2026-11-10';
+const D=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const ISO=dt=>dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+const diff=(a,b)=>Math.round((D(b)-D(a))/864e5);
+const DAYS=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const dm=s=>{const x=D(s);return String(x.getDate()).padStart(2,'0')+'/'+String(x.getMonth()+1).padStart(2,'0')};
+const dmy=s=>dm(s)+'/'+D(s).getFullYear();
+const dayName=s=>DAYS[D(s).getDay()];
+const money=n=>Math.round(n).toLocaleString('en-US');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let _id=1;const uid=()=>'x'+(_id++);
+const ic=(n,c)=>`<svg class="i ${c||''}" aria-hidden="true"><use href="#${n}"/></svg>`;
+const plural=(n,one,two,few,many)=>n===1?one:n===2?two:(n>=3&&n<=10)?`${n} ${few}`:`${n} ${many}`;
+const W={'شهادة':['شهادة واحدة','شهادتان','شهادات','شهادة'],'دعوة':['دعوة واحدة','دعوتان','دعوات','دعوة'],'مهمة':['مهمة واحدة','مهمتين','مهام','مهمة'],'نفقة':['نفقة واحدة','نفقتين','نفقات','نفقة'],'مدعو':['مدعو واحد','مدعوَّين','مدعوين','مدعواً']};
+const N=(n,w)=>{const f=W[w];return n===0?`0 ${f[2]}`:plural(n,f[0],f[1],f[2],f[3])};
+
+const TYPES={birthday:{l:'عيد ميلاد',i:'gift'},graduation:{l:'حفل تخرّج',i:'cap'},meeting:{l:'اجتماع',i:'users'},conference:{l:'مؤتمر',i:'present'},seminar:{l:'ندوة',i:'mega'},other:{l:'أخرى',i:'more'}};
+const PRO=new Set(['meeting','conference','seminar']);
+const PH={before:'قبل',during:'أثناء',after:'بعد'};
+const CATS=['قاعة','طعام','حلويات','ديكور','تصوير','طباعة','نقل','أخرى'];
+const SERVICES=['حلويات','ديكور','تصوير','موسيقى','طعام','قاعة','نقل'];
+const ST={c:{l:'مؤكَّد',k:'ok',i:'check'},p:{l:'معلّق',k:'warn',i:'clock'},d:{l:'معتذر',k:'err',i:'x'}};
+
+/* ---------- sample data ---------- */
+function G(rows){return rows.map(r=>({id:uid(),name:r[0],rel:r[1],contact:r[2]||'',status:r[3]}))}
+function T(rows){return rows.map(r=>({id:uid(),title:r[0],phase:r[1],due:r[2]||'',done:!!r[3],owner:r[4]||''}))}
+function X(rows){return rows.map(r=>({id:uid(),label:r[0],cat:r[1],amount:r[2],date:r[3],pending:false}))}
+function seed(p){
+  if(p==='sara') return {user:{first:'سارة',full:'سارة',role:'منظِّمة فعاليات عائلية'},events:[
+    {id:uid(),type:'birthday',name:'عيد ميلاد أمي الستين',date:'2026-11-21',time:'19:00',place:'منزل العائلة — حي الزيتون',budget:60000,expected:15,closed:false,
+     guests:G([['ليلى بن علي','الأخت','0550123456','c'],['ياسين بلقاسم','الأخ','0661234567','c'],['كريم حداد','ابن العم','0770112233','p'],['نادية مرابط','صديقة العائلة','0555443322','d'],['سعاد حمدي','الخالة','0699887766','c'],['رشيد بلقاسم','الخال','0551239876','c'],['أمينة زروقي','الجارة','0662345678','p'],['هشام بن علي','زوج الأخت','0773456789','c'],['فاطمة عيساوي','صديقة أمي','0554567890','c'],['مريم حداد','ابنة العم','0665678901','p'],['عمر قاسمي','صديق العائلة','0776789012','d'],['زينب بلقاسم','العمة','0557890123','c'],['خالد مرابط','ابن الخال','0668901234','p'],['حياة زروقي','الجارة','0779012345','c'],['سليم بلقاسم','الأخ الأصغر','0550987654','c']]),
+     tasks:T([['حجز الحلويات','before','2026-11-08'],['تأكيد العدد مع المصوّر','before','2026-11-18'],['اختيار قائمة الأغاني','before','2026-11-19',0,'ياسين'],['حجز المصوّر','before','2026-11-01',1],['شراء الزينة والبالونات','before','2026-11-04',1],['إرسال الدعوات','before','2026-11-02',1],['حجز الطاولات والكراسي','before','2026-11-05',1],['استلام الكعكة','during','2026-11-21'],['استقبال الضيوف','during','2026-11-21'],['إرسال صور الحفل للعائلة','after','2026-11-23']]),
+     expenses:X([['عربون المصوّر','تصوير',15000,'2026-11-06'],['بالونات وأضواء','ديكور',9500,'2026-11-04'],['حلويات (دفعة أولى)','حلويات',12000,'2026-11-02'],['مستلزمات متفرقة','أخرى',2000,'2026-11-01']])},
+    {id:uid(),type:'graduation',name:'حفل تخرّج سليم',date:'2026-12-05',time:'18:00',place:'قاعة النجمة',budget:40000,expected:23,closed:false,
+     guests:G([['سليم بلقاسم','المتخرّج','0550987654','c'],['ليلى بن علي','الأخت','0550123456','p'],['ياسين بلقاسم','الأخ','0661234567','p'],['رانيا قاسمي','صديقة سليم','0771234500','p'],['أنيس حمدي','صديق سليم','0661230099','p']]),
+     tasks:T([['حجز القاعة','before','2026-11-03',1],['طلب كعكة التخرّج','before','2026-12-01'],['شراء هدية التخرّج','before','2026-12-03']]),
+     expenses:X([['عربون القاعة','قاعة',10000,'2026-11-03']])}
+  ]};
+  return {user:{first:'أمين',full:'أمين',role:'منسّق المؤتمرات — الموارد البشرية'},events:[
+    {id:uid(),type:'meeting',name:'اجتماع مجلس الإدارة',date:'2026-11-18',time:'10:00',place:'القاعة A',budget:20000,expected:12,closed:false,
+     guests:G([['د. فريدة عمراني','الرئيسة','f.amrani@company.dz','c'],['مراد شريف','المدير المالي','m.cherif@company.dz','c'],['سلمى بوزيد','المديرة التقنية','s.bouzid@company.dz','c'],['عادل منصوري','عضو المجلس','','p'],['نسيم قادري','عضو المجلس','n.kadri@company.dz','c'],['هدى صالحي','أمينة السر','h.salhi@company.dz','c'],['رضا لونيس','عضو المجلس','r.lounis@company.dz','p'],['سمير عباس','مدير العمليات','s.abbas@company.dz','c'],['كمال زيتوني','مستشار قانوني','k.zitouni@company.dz','c'],['وفاء بن يوسف','عضوة المجلس','w.benyoucef@company.dz','c'],['جمال حمادي','عضو المجلس','j.hamadi@company.dz','p'],['رانيا قاسمي','مديرة الموارد البشرية','r.kacimi@company.dz','c']]),
+     tasks:T([['إرسال جدول الأعمال','before','2026-11-09',0,'أمين'],['تحضير ملف العرض المالي','before','2026-11-08',0,'مراد'],['حجز القاعة','before','2026-11-02',1,'هدى'],['تحرير المحضر','after','2026-11-19',0,'هدى']]),
+     expenses:X([['ضيافة','طعام',6000,'2026-11-05']])},
+    {id:uid(),type:'seminar',name:'ورشة الأمن السيبراني',date:'2026-12-03',time:'09:00',place:'مركز التكوين',budget:300000,expected:45,closed:false,
+     guests:G([['أنيس حمدي','نوفا سوفت','a.hamdi@novasoft.dz','c'],['ليلى بن علي','جامعة باتنة 2','l.benali@univ.dz','c'],['كريم حداد','بنك التنمية','k.haddad@bank.dz','p'],['نادية مرابط','مستقلة','nadia.m@mail.com','c'],['يوسف سعدي','بلدية المدينة','','c']]),
+     tasks:T([['تأكيد المدرّب','before','2026-11-15',0,'أمين'],['حجز القاعة','before','2026-10-20',1,'هدى'],['طباعة الشارات','before','2026-11-20',0,'سمير']]),
+     expenses:X([['أتعاب المدرّب','أخرى',180000,'2026-11-02'],['كراء القاعة','قاعة',96000,'2026-10-20']])},
+    {id:uid(),type:'seminar',name:'ندوة التحول الرقمي 2027',date:'2027-01-14',time:'09:00',place:'فندق الأوراس — قاعة المؤتمرات',budget:1300000,expected:200,closed:false,
+     guests:G([['د. فريدة عمراني','جامعة باتنة 2','f.amrani@univ.dz','c'],['مراد شريف','شركة نوفا سوفت','m.cherif@novasoft.dz','c'],['سلمى بوزيد','مستقلة','salma.bz@mail.com','c'],['عادل منصوري','بلدية المدينة','','c'],['نسيم قادري','وزارة الرقمنة','n.kadri@gov.dz','c'],['هدى صالحي','اتصالات الجزائر','h.salhi@at.dz','p'],['رضا لونيس','جامعة قسنطينة','r.lounis@univ.dz','c'],['سمير عباس','بنك التنمية','s.abbas@bank.dz','d'],['كمال زيتوني','غرفة التجارة','k.zitouni@cci.dz','c'],['وفاء بن يوسف','مستقلة','wafa.by@mail.com','p'],['جمال حمادي','سوناطراك','j.hamadi@sonatrach.dz','c'],['إيمان بوعلام','جامعة سطيف','i.boualem@univ.dz','c']]),
+     tasks:T([['تأكيد المتحدّثين الخمسة','before','2026-11-12',0,'أمين'],['طباعة الشارات والبرنامج','before','2027-01-05',0,'سمير'],['تجربة الصوت والعرض','before','2027-01-13',0,'هدى'],['حجز القاعة','before','2026-10-15',1,'أمين'],['تصميم البرنامج','before','2026-10-25',1,'هدى'],['إرسال الدعوات الرسمية','before','2026-11-01',1,'أمين'],['استقبال المشاركين وتسجيل الحضور','during','2027-01-14',0,'هدى'],['إدارة الجلسات والتوقيت','during','2027-01-14',0,'أمين'],['التصوير والبث المباشر','during','2027-01-14',0,'سمير'],['توزيع استمارات التقييم','before','2027-01-14',0,'أمين'],['إرسال شهادات الحضور','after','2027-01-16',0,'أمين'],['تحليل استمارات التقييم','after','2027-01-20',0,'أمين'],['تسوية الفواتير مع الفندق','after','2027-01-25',0,'رانيا']]),
+     expenses:X([['كراء القاعة','قاعة',600000,'2026-10-15'],['ضيافة القهوة والغداء','طعام',180000,'2026-11-01'],['طباعة','طباعة',45000,'2026-11-03'],['أتعاب المتحدّثين','أخرى',98000,'2026-11-05']])}
+  ]};
+}
+
+/* ---------- state ---------- */
+let S;
+function reset(p,wide){
+  const d=seed(p);
+  S={persona:p,user:d.user,events:d.events,trash:[],stack:[{n:'home'}],wide:wide,clarity:false,offline:false,ov:null,snack:null,paths:{},ui:{q:'',gexp:null},cd:null,_key:''};
+}
+const narrow=()=>window.innerWidth<760;
+reset('sara',false);
+
+const top=()=>S.stack[S.stack.length-1];
+const ev=id=>S.events.find(e=>e.id===id);
+const active=()=>S.events.filter(e=>!e.closed).sort((a,b)=>a.date<b.date?-1:1);
+const spent=e=>e.expenses.reduce((s,x)=>s+x.amount,0);
+const pct=e=>e.budget?Math.round(spent(e)/e.budget*100):0;
+const cnt=e=>{const r={c:0,p:0,d:0};e.guests.forEach(g=>r[g.status]++);return r};
+const late=t=>!t.done&&t.due&&t.due<TODAY;
+const doneN=e=>e.tasks.filter(t=>t.done).length;
+const bstate=p=>p>100?'err':p>=80?'warn':'ok';
+const countdown=e=>{const n=diff(TODAY,e.date);return n<0?'انتهت':n===0?'اليوم':n===1?'غداً':`بعد ${n} يوماً`};
+function mark(k){if(!S.paths[k]){S.paths[k]=true}}
+function snack(msg,undo){S.snack={msg,undo};clearTimeout(S._st);S._st=setTimeout(()=>{S.snack=null;render()},6000)}
+function go(n,o){S.stack.push(Object.assign({n},o||{}));S.ov=null}
+function root(n,o){S.stack=[Object.assign({n},o||{})];S.ov=null}
+function back(){if(S.stack.length>1)S.stack.pop();else root('home')}
+
+/* ---------- shell ---------- */
+function render(){
+  const app=$('#app');const ae=document.activeElement;const fid=ae&&app.contains(ae)?ae.id:'';let ss=null,se=null;
+  try{ss=ae.selectionStart;se=ae.selectionEnd}catch(e){}
+  const sc=$('#scroll');const key=JSON.stringify(top());const st=sc&&S._key===key?sc.scrollTop:0;
+  const wide=S.wide&&!narrow();
+  app.className='device '+(wide?'wide':'phone');
+  app.innerHTML=shell(wide);
+  S._key=key;
+  const sc2=$('#scroll');if(sc2)sc2.scrollTop=st;
+  if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}
+  else if(S._focus){const el=document.getElementById(S._focus);if(el)el.focus();S._focus=null}
+  panel();
+}
+function shell(wide){
+  const t=top();const s=SCR[t.n](t,wide);
+  const ov=S.ov?OV[S.ov.t](wide):'';
+  const sn=S.snack?`<div class="snack" role="status">${ic('check','s ok')}<span>${esc(S.snack.msg)}</span>${S.snack.undo?'<button class="lnk" data-a="undo">تراجع</button>':''}</div>`:'';
+  const cls='app'+(S.clarity?' clear':'')+(wide?' wide':'');
+  if(wide) return `<div class="${cls}">${sidenav(t)}<div class="wmain">${s.h||''}<div class="ct" id="scroll"><div class="wbody">${s.b}</div></div>${s.f?`<div class="foot-cta">${s.f}</div>`:''}</div>${ov}${sn}</div>`;
+  return `<div class="${cls}"><div class="sb"><span>9:41</span><span class="sbi">${S.offline?ic('wifioff','s'):''}<i></i></span></div>${s.h||''}<div class="ct" id="scroll">${s.b}</div>${s.f?`<div class="foot-cta">${s.f}</div>`:''}${s.tabs?tabbar(t.n):''}${ov}${sn}</div>`;
+}
+function tabbar(n){
+  const it=(k,i,l)=>`<button data-a="root" data-n="${k}" ${n===k?'aria-current="page"':''}>${ic(i)}${l}</button>`;
+  return `<nav class="tb" aria-label="التنقل الرئيسي">${it('home','home','الرئيسية')}${it('events','grid','فعالياتي')}<button class="fab" data-a="create" aria-label="فعالية جديدة">${ic('plus','l')}</button>${it('calendar','cal','التقويم')}${it('account','user','حسابي')}</nav>`;
+}
+function sidenav(t){
+  const rootN=S.stack[0].n;
+  const it=(k,i,l,badge)=>`<button class="nav" data-a="root" data-n="${k}" ${rootN===k?'aria-current="page"':''}>${ic(i)}<span class="grow">${l}</span>${badge?`<span class="chip err">${badge}</span>`:''}</button>`;
+  const lateN=active().reduce((s,e)=>s+e.tasks.filter(late).length,0);
+  return `<nav class="side" aria-label="التنقل الرئيسي"><div class="logo"><i>${ic('cal','s')}</i>مُناسَبة</div>
+    <button class="btn pri" data-a="create" style="margin-bottom:10px">${ic('plus','s')}فعالية جديدة</button>
+    ${it('home','home','لوحة التحكم',lateN||'')}${it('events','grid','الفعاليات')}${it('calendar','cal','التقويم')}${it('account','user','حسابي والإعدادات')}
+    <div style="margin-top:auto" class="flex ts"><span class="av">${esc(S.user.first[0])}</span><span>${esc(S.user.full)}<br>${esc(S.user.role)}</span></div></nav>`;
+}
+const hdr=(title,opt)=>{opt=opt||{};return `<header class="ab">${opt.noBack?'':`<button class="ib" data-a="${opt.backA||'back'}" aria-label="رجوع">${ic('back')}</button>`}<h1>${esc(title)}</h1>${opt.right||''}</header>`};
+const evIcon=(e,size)=>`<span class="av" style="${size?`width:${size}px;height:${size}px`:''}">${ic(TYPES[e.type].i,'s')}</span>`;
+
+/* ---------- screens ---------- */
+const SCR={};
+SCR.home=(t,wide)=>{
+  const act=active();
+  const h=`<header class="ab big"><div class="grow"><div class="ts">${dayName(TODAY)} 10 نوفمبر 2026</div><h1>مرحباً ${esc(S.user.first)}</h1></div><button class="ib" data-a="root" data-n="events" aria-label="بحث">${ic('search')}</button><button class="ib dot" data-a="noop" aria-label="الإشعارات">${ic('bell')}</button></header>`;
+  if(!act.length) return {h,tabs:1,b:`<div class="empty"><div class="bub">${ic('cal','xl')}</div><b style="font-size:calc(18*var(--u))">لا توجد فعاليات بعد</b><p class="ts" style="max-width:250px;margin:0">أنشئ فعاليتك الأولى في أقل من دقيقة، وسنساعدك في المدعوين والمهام والميزانية.</p><button class="btn pri" data-a="create">${ic('plus','s')}أنشئ أول فعالية</button>${S.trash.length?`<button class="btn ghost sm" data-a="root" data-n="account">استعادة فعالية محذوفة</button>`:''}</div>`};
+  const lateItems=[];act.forEach(e=>e.tasks.filter(late).forEach(x=>lateItems.push([e,x])));
+  const pend=act.filter(e=>cnt(e).p>0&&diff(TODAY,e.date)<=45);
+  const hot=act.filter(e=>e.budget&&pct(e)>=80);
+  const attention=lateItems.slice(0,4).map(([e,x])=>`<div class="li"><button class="cb" role="checkbox" aria-checked="false" aria-label="تعليم «${esc(x.title)}» كمنجزة" data-a="ttoggle" data-id="${e.id}" data-tid="${x.id}"></button><button class="grow" style="text-align:right" data-a="opentask" data-id="${e.id}" data-tid="${x.id}"><div class="b">${esc(x.title)}</div><div class="ts">${esc(e.name)}</div></button><span class="chip err">${ic('alert','s')}متأخرة ${plural(-diff(TODAY,x.due)*-1*-1,'يوماً','يومين','أيام','يوماً')}</span></div>`)
+    .concat(pend.slice(0,2).map(e=>`<div class="li">${ic('clock')}<button class="grow" style="text-align:right" data-a="open" data-id="${e.id}" data-tab="guests"><div class="b">${plural(cnt(e).p,'دعوة واحدة بلا ردّ','دعوتان بلا ردّ','دعوات بلا ردّ','دعوة بلا ردّ')}</div><div class="ts">${esc(e.name)}</div></button><button class="btn sec sm" data-a="remind" data-id="${e.id}">تذكير</button></div>`))
+    .concat(hot.map(e=>`<div class="li">${ic('wallet')}<button class="grow" style="text-align:right" data-a="open" data-id="${e.id}" data-tab="budget"><div class="b">الميزانية بلغت ${pct(e)}%</div><div class="ts">${esc(e.name)}</div></button><span class="chip ${bstate(pct(e))}">${pct(e)>100?'تجاوز':'قرب الحد'}</span></div>`));
+  const attBox=`<div class="card" style="padding:6px 12px"><div class="sec-t" style="margin:6px 0 2px">يحتاج انتباهك ${attention.length?`<span class="chip err">${attention.length}</span>`:''}</div>${attention.join('')||`<div class="li ts">${ic('check','s')}لا شيء يحتاج انتباهك الآن.</div>`}</div>`;
+  if(wide){
+    const allP=act.reduce((s,e)=>s+cnt(e).p,0);const tb=act.reduce((s,e)=>s+e.budget,0),ts=act.reduce((s,e)=>s+spent(e),0);
+    const rows=act.map(e=>{const c=cnt(e),p=pct(e),pr=e.tasks.length?Math.round(doneN(e)/e.tasks.length*100):0,l=e.tasks.filter(late).length;
+      const chip=l?`<span class="chip err">${ic('alert','s')}${plural(l,'مهمة متأخرة','مهمتان متأخرتان','مهام متأخرة','مهمة متأخرة')}</span>`:p>=80?`<span class="chip warn">${ic('wallet','s')}ميزانية قرب الحد</span>`:`<span class="chip ok">${ic('check','s')}في الموعد</span>`;
+      return `<tr data-a="open" data-id="${e.id}" tabindex="0"><td><div class="flex">${evIcon(e)}<div><b>${esc(e.name)}</b><div class="ts">${TYPES[e.type].l} · ${esc(e.place)}</div></div></div></td><td class="num">${dmy(e.date)}</td><td style="width:130px"><div class="ts num">${pr}%</div><div class="bar"><span style="width:${pr}%"></span></div></td><td class="num" style="white-space:nowrap">${c.c} / ${e.guests.length}</td><td class="num ${p>=80?'b':''}" style="color:var(--${p>=80?bstate(p):'ink'})">${e.budget?p+'%':'—'}</td><td>${chip}</td></tr>`}).join('');
+    const dl=[];act.forEach(e=>e.tasks.filter(x=>!x.done&&x.due).forEach(x=>dl.push([e,x])));dl.sort((a,b)=>a[1].due<b[1].due?-1:1);
+    return {h,b:`<div class="dk-kpis">
+      <div class="dk-kpi"><span class="ico" style="background:var(--p-50);color:var(--p)">${ic('grid')}</span><div><b>${act.length}</b><small>فعاليات نشطة</small></div></div>
+      <div class="dk-kpi"><span class="ico" style="background:var(--err-50);color:var(--err)">${ic('alert')}</span><div><b style="color:var(--err)">${lateItems.length}</b><small>مهام متأخرة</small></div></div>
+      <div class="dk-kpi"><span class="ico" style="background:var(--warn-50);color:var(--warn)">${ic('clock')}</span><div><b>${allP}</b><small>دعوات بلا ردّ</small></div></div>
+      <div class="dk-kpi"><span class="ico" style="background:var(--ok-50);color:var(--ok)">${ic('wallet')}</span><div><b>${tb?Math.round(ts/tb*100):0}%</b><small>من مجموع الميزانيات مصروفة</small></div></div></div>
+      <div class="wgrid"><div class="card" style="padding:0;overflow:hidden"><div class="between" style="padding:12px 14px"><b>الفعاليات النشطة</b><span class="ts">انقر على صف لفتح الفعالية</span></div><div class="tblw"><table class="tbl"><thead><tr><th>الفعالية</th><th>التاريخ</th><th>التقدّم</th><th>المدعوون</th><th>الميزانية</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+      <div style="display:flex;flex-direction:column;gap:12px">${attBox}<div class="card" style="padding:6px 12px"><div class="sec-t" style="margin:6px 0 2px">مواعيد نهائية قريبة</div>${dl.slice(0,5).map(([e,x])=>`<div class="li"><button class="grow" style="text-align:right" data-a="opentask" data-id="${e.id}" data-tid="${x.id}"><div class="b">${esc(x.title)}</div><div class="ts">${esc(e.name)}${x.owner?' · '+esc(x.owner):''}</div></button><span class="chip ${late(x)?'err':diff(TODAY,x.due)<=3?'warn':'neu'} num">${dm(x.due)}</span></div>`).join('')}</div></div></div>`};
+  }
+  const nx=act[0],c=cnt(nx);
+  const others=act.slice(1).map(e=>`<button class="card flex" style="text-align:right;width:100%" data-a="open" data-id="${e.id}">${evIcon(e)}<div class="grow"><div class="b">${esc(e.name)}</div><div class="ts">${dayName(e.date)} ${dm(e.date)} · ${e.guests.length} مدعواً</div></div>${ic('chev','s')}</button>`).join('');
+  return {h,tabs:1,b:`<button class="card hero" data-a="open" data-id="${nx.id}"><div class="between"><span class="ts" style="color:#fff;opacity:.9">الفعالية القادمة</span><span class="chip">${countdown(nx)}</span></div><div class="flex" style="font-size:calc(18*var(--u));font-weight:800;margin:4px 0 2px">${ic(TYPES[nx.type].i)}${esc(nx.name)}</div><div class="flex" style="font-size:calc(12.5*var(--u));opacity:.92">${ic('cal','s')}${dayName(nx.date)} ${dm(nx.date)} · ${esc(nx.time)} ${ic('pin','s')}${esc(nx.place.split('—')[0])}</div></button>
+    <div class="kpis"><button class="kpi" data-a="open" data-id="${nx.id}" data-tab="guests"><b>${c.c}/${nx.guests.length}</b>مؤكَّد</button><button class="kpi" data-a="open" data-id="${nx.id}" data-tab="budget"><b style="color:var(--${nx.budget?bstate(pct(nx)):'ink'})">${nx.budget?money(nx.budget-spent(nx)):'—'}</b>دج متبقية</button><button class="kpi" data-a="open" data-id="${nx.id}" data-tab="tasks"><b>${doneN(nx)}/${nx.tasks.length}</b>مهام منجزة</button></div>
+    ${attBox}${others?`<div class="sec-t">فعالياتي القادمة <button class="btn ghost sm" data-a="root" data-n="events">عرض الكل</button></div>${others}`:''}`};
+};
+SCR.events=(t,wide)=>{
+  const act=active(),arch=S.events.filter(e=>e.closed);
+  const row=e=>`<button class="card flex" style="text-align:right;width:100%" data-a="open" data-id="${e.id}">${evIcon(e)}<div class="grow"><div class="b">${esc(e.name)}</div><div class="ts">${TYPES[e.type].l} · ${dayName(e.date)} ${dmy(e.date)}</div></div>${e.closed?'<span class="chip neu">مؤرشفة</span>':`<span class="chip p">${countdown(e)}</span>`}</button>`;
+  return {h:hdr('فعالياتي',{noBack:1,right:`<button class="btn pri sm" data-a="create">${ic('plus','s')}جديدة</button>`}),tabs:1,b:
+    (act.length?`<div class="sec-t">القادمة (${act.length})</div>${act.map(row).join('')}`:`<div class="banner info">${ic('info','s')}<span>لا توجد فعاليات قادمة.</span></div>`)+
+    (arch.length?`<div class="sec-t">الأرشيف (${arch.length})</div>${arch.map(row).join('')}`:'')};
+};
+SCR.calendar=(t,wide)=>{
+  if(!t.ym)t.ym=[2026,10];if(!t.sel)t.sel=TODAY;if(!t.view)t.view='month';
+  const [y,m]=t.ym;const first=new Date(y,m,1);const start=new Date(y,m,1-first.getDay());
+  const marks={};S.events.forEach(e=>{if(e.closed)return;(marks[e.date]=marks[e.date]||{}).e=1;e.tasks.forEach(x=>{if(x.due&&!x.done)(marks[x.due]=marks[x.due]||{}).t=1})});
+  const cells=[];for(let i=0;i<42;i++){const dt=new Date(start);dt.setDate(start.getDate()+i);cells.push(dt)}
+  let use=cells;if(t.view==='week'){const si=cells.findIndex(c=>ISO(c)===t.sel);const w=si<0?0:Math.floor(si/7);use=cells.slice(w*7,w*7+7)}
+  else{while(use.length>35&&use.slice(-7).every(c=>c.getMonth()!==m))use=use.slice(0,-7)}
+  const grid=DAYS.map(d=>`<span class="h">${d.replace('ال','').slice(0,3)}</span>`).join('')+use.map(c=>{const s=ISO(c),mk=marks[s]||{};return `<button data-a="calsel" data-d="${s}" class="${c.getMonth()!==m?'out':''} ${s===TODAY?'today':''}" aria-pressed="${s===t.sel}" aria-label="${dayName(s)} ${dmy(s)}">${c.getDate()}<span class="dots">${mk.e?'<i></i>':''}${mk.t?'<i class="r"></i>':''}</span></button>`}).join('');
+  const evs=S.events.filter(e=>!e.closed&&e.date===t.sel);const tks=[];S.events.forEach(e=>{if(!e.closed)e.tasks.forEach(x=>{if(x.due===t.sel&&!x.done)tks.push([e,x])})});
+  const ag=evs.map(e=>`<button class="card agenda" style="border-right-color:var(--p)" data-a="calopen" data-id="${e.id}"><div class="grow"><div class="b">${esc(e.name)}</div><div class="ts">${esc(e.time)} · ${esc(e.place)}</div></div>${ic('chev','s')}</button>`).join('')+
+    tks.map(([e,x])=>`<button class="card agenda" style="border-right-color:var(--err)" data-a="caltask" data-id="${e.id}" data-tid="${x.id}"><div class="grow"><div class="b">${esc(x.title)}</div><div class="ts">مهمة · ${esc(e.name)}</div></div>${late(x)?'<span class="chip err">متأخرة</span>':''}</button>`).join('');
+  return {h:hdr('التقويم',{noBack:1,right:`<button class="btn out sm" data-a="caltoday">اليوم</button>`}),tabs:1,b:`
+    <div class="seg" role="group" aria-label="طريقة العرض"><button data-a="calview" data-v="month" aria-pressed="${t.view==='month'}">شهر</button><button data-a="calview" data-v="week" aria-pressed="${t.view==='week'}">أسبوع</button></div>
+    <div class="between"><button class="ib" data-a="calnav" data-d="-1" aria-label="الشهر السابق">${ic('back')}</button><b style="font-size:calc(16*var(--u))">${MONTHS[m]} ${y}</b><button class="ib" data-a="calnav" data-d="1" aria-label="الشهر التالي">${ic('fwd')}</button></div>
+    <div class="cal">${grid}</div>
+    <div class="legend"><span><i style="background:var(--accent)"></i>فعالية</span><span><i style="background:var(--err)"></i>موعد نهائي لمهمة</span></div>
+    <div class="sec-t">${dayName(t.sel)} ${D(t.sel).getDate()} ${MONTHS[D(t.sel).getMonth()]}</div>
+    ${ag||`<div class="ts">لا مواعيد في هذا اليوم. جرّب يوماً عليه نقطة.</div>`}`};
+};
+SCR.event=(t,wide)=>{
+  const e=ev(t.id);if(!e){back();return SCR[top().n](top(),wide)}
+  const tab=t.tab||'overview';const c=cnt(e);
+  const tabs=[['overview','نظرة عامة'],['guests','قائمة المدعوين'],['tasks','المهام'],['budget','الميزانية']];
+  const h=hdr(e.name,{right:e.closed?'':`<button class="ib" data-a="menu" data-id="${e.id}" aria-label="خيارات الفعالية">${ic('dots')}</button>`})+
+    `<div style="background:var(--card);padding:0 14px 8px" class="flex ts">${ic('cal','s')}${dayName(e.date)} ${dmy(e.date)} · ${esc(e.time)}<span class="chip ${e.closed?'neu':'p'}" style="margin-right:auto">${e.closed?'مؤرشفة':countdown(e)}</span></div>
+    <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${tab===k}" data-a="tab" data-v="${k}">${l}</button>`).join('')}</div>`;
+  const ro=e.closed?`<div class="banner info">${ic('archive','s')}<span>هذه الفعالية مؤرشفة. البيانات للعرض فقط.</span></div>`:'';
+  if(tab==='overview'){
+    const next=e.tasks.filter(x=>!x.done).sort((a,b)=>(a.due||'9')<(b.due||'9')?-1:1).slice(0,3);
+    return {h,f:e.closed?'':`<button class="btn out" data-a="edit" data-id="${e.id}">${ic('edit','s')}تعديل</button><button class="btn sec" data-a="close" data-id="${e.id}">${ic('award','s')}إغلاق الفعالية</button>`,b:`${ro}
+      <div class="card" style="display:flex;flex-direction:column;gap:8px">
+        <div class="flex">${evIcon(e)}<div><div class="b">${TYPES[e.type].l}</div><div class="ts">${PRO.has(e.type)?'فعالية مهنية · شهادات حضور متاحة':'فعالية عائلية'}</div></div></div>
+        <div class="flex">${ic('cal','s')}${dayName(e.date)} ${dmy(e.date)} · الساعة ${esc(e.time)}</div>
+        <div class="flex">${ic('pin','s')}${esc(e.place||'لم يُحدَّد المكان')}</div></div>
+      <div class="kpis"><button class="kpi" data-a="tab" data-v="guests"><b>${c.c}/${e.guests.length}</b>مؤكَّد</button><button class="kpi" data-a="tab" data-v="budget"><b>${e.budget?pct(e)+'%':'—'}</b>مصروف</button><button class="kpi" data-a="tab" data-v="tasks"><b>${doneN(e)}/${e.tasks.length}</b>مهام</button></div>
+      <div class="card" style="padding:6px 12px"><div class="sec-t" style="margin:6px 0 2px">المهام التالية</div>${next.map(x=>`<div class="li"><span class="grow b">${esc(x.title)}</span>${x.due?`<span class="chip ${late(x)?'err':'neu'} num">${dm(x.due)}</span>`:''}</div>`).join('')||'<div class="li ts">كل المهام منجزة.</div>'}</div>`};
+  }
+  if(tab==='guests'){
+    const f=t.f||'all';const q=S.ui.q.trim();
+    let list=e.guests.filter(g=>(f==='all'||g.status===f)&&(!q||g.name.includes(q)||g.contact.includes(q)));
+    const k=(v,n,col,l)=>`<button class="kpi" data-a="gfilter" data-v="${v}" aria-pressed="${f===v}"><b style="color:var(--${col})">${n}</b>${l}</button>`;
+    const rows=list.map(g=>{const s=ST[g.status];const ex=S.ui.gexp===g.id&&!e.closed;
+      return `<div class="li" style="flex-wrap:wrap"><span class="av">${esc(g.name.replace(/^د\.\s*/,'')[0])}</span><div class="grow"><div class="b">${esc(g.name)}</div><div class="ts" dir="auto" style="text-align:right">${esc(g.rel)}${g.contact?' · '+esc(g.contact):''}</div></div>
+      <button class="chip ${s.k}" data-a="gexp" data-gid="${g.id}" aria-expanded="${ex}" aria-label="حالة ${esc(g.name)}: ${s.l}. انقر للتغيير" ${e.closed?'disabled':''}>${ic(s.i,'s')}${s.l}</button>
+      ${ex?`<div class="seg" style="width:100%;margin-top:7px" role="group" aria-label="تغيير الحالة">${['c','p','d'].map(v=>`<button data-a="gstatus" data-gid="${g.id}" data-v="${v}" aria-pressed="${g.status===v}">${ic(ST[v].i,'s')} ${ST[v].l}</button>`).join('')}</div>`:''}</div>`}).join('');
+    return {h,f:e.closed?'':`<button class="btn sec" data-a="remind" data-id="${e.id}" ${c.p?'':'disabled'}>${ic('send','s')}تذكير المعلّقين (${c.p})</button><button class="btn pri" data-a="gadd" style="flex:.7">${ic('plus','s')}مدعو</button>`,b:`${ro}
+      <div class="kpis" role="group" aria-label="تصفية حسب الحالة">${k('c',c.c,'ok','مؤكَّد')}${k('p',c.p,'warn','معلّق')}${k('d',c.d,'err','معتذر')}</div>
+      <input class="inp" id="gq" data-in="q" type="search" placeholder="ابحث بالاسم أو الرقم" value="${esc(S.ui.q)}" aria-label="بحث في قائمة المدعوين">
+      ${f!=='all'?`<div class="between ts"><span>يعرض: ${ST[f].l} فقط</span><button class="btn ghost sm" data-a="gfilter" data-v="all">عرض الكل (${e.guests.length})</button></div>`:''}
+      <div class="card" style="padding:2px 12px">${rows||(e.guests.length?'<div class="li ts">لا نتائج. غيّر البحث أو المرشّح.</div>':'<div class="li ts">لا مدعوين بعد. أضف أول مدعو من زر «+ مدعو» في الأسفل.</div>')}</div>`};
+  }
+  if(tab==='tasks'){
+    const ph=t.ph||'before';
+    const sortT=a=>a.slice().sort((x,y)=>(x.done-y.done)||((late(y)?1:0)-(late(x)?1:0))||((x.due||'9')<(y.due||'9')?-1:1));
+    const add=e.closed?'':`<input class="inp grow" id="qTask" data-in="qtask" placeholder="أضف مهمة سريعة… ثم Enter" value="${esc(S.ui.qtask||'')}" aria-label="عنوان مهمة جديدة"><select class="inp" id="qPh" data-in="qph" style="width:auto" aria-label="المرحلة">${Object.entries(PH).map(([k,l])=>`<option value="${k}" ${(S.ui.qph||ph)===k?'selected':''}>${l}</option>`).join('')}</select><button class="btn pri" style="flex:none" data-a="tadd" aria-label="إضافة المهمة">${ic('plus','s')}</button>`;
+    if(wide){
+      const col=k=>{const L=sortT(e.tasks.filter(x=>x.phase===k));return `<div class="col" data-drop="${k}"><h3><span>${PH[k]} الفعالية</span><span class="ts num">${L.filter(x=>x.done).length}/${L.length}</span></h3>${L.map(x=>`<div class="tk ${late(x)?'late':''} ${t.hl===x.id?'hl':''}" draggable="${!e.closed}" data-tid="${x.id}" tabindex="0" aria-label="${esc(x.title)}. Alt مع السهمين لنقلها بين المراحل"><div class="between"><span class="flex"><button class="cb" role="checkbox" aria-checked="${x.done}" data-a="ttoggle" data-id="${e.id}" data-tid="${x.id}" aria-label="منجزة">${x.done?ic('check','s'):''}</button><b class="${x.done?'strike':''}">${esc(x.title)}</b></span>${ic('drag','s')}</div><div class="between">${x.due?`<span class="chip ${late(x)?'err':'neu'} num">${late(x)?ic('alert','s'):''}${dm(x.due)}</span>`:'<span class="ts">بلا موعد</span>'}${x.owner?`<span class="flex ts"><span class="av" style="width:24px;height:24px;font-size:11px">${esc(x.owner[0])}</span>${esc(x.owner)}</span>`:''}</div></div>`).join('')}</div>`};
+      return {h,f:add,b:`${ro}<div class="between"><span class="ts">اسحب البطاقة بين الأعمدة، أو حدّدها واضغط Alt مع ← / → لنقلها.</span><span class="chip ok">${doneN(e)}/${e.tasks.length} منجزة</span></div><div class="kan">${col('before')}${col('during')}${col('after')}</div>`};
+    }
+    const L=sortT(e.tasks.filter(x=>x.phase===ph));const dn=L.filter(x=>x.done).length;const p=L.length?Math.round(dn/L.length*100):0;
+    return {h,f:add,b:`${ro}<div class="seg" role="group" aria-label="المرحلة">${Object.entries(PH).map(([k,l])=>`<button data-a="tph" data-v="${k}" aria-pressed="${ph===k}">${l} (${e.tasks.filter(x=>x.phase===k).length})</button>`).join('')}</div>
+      <div><div class="between ts"><span>${dn} من ${L.length} مكتملة</span><b style="color:var(--ink)">${p}%</b></div><div class="bar ok"><span style="width:${p}%"></span></div></div>
+      <div class="card" style="padding:2px 12px">${L.map(x=>`<div class="li ${t.hl===x.id?'hl':''}"><button class="cb" role="checkbox" aria-checked="${x.done}" data-a="ttoggle" data-id="${e.id}" data-tid="${x.id}" aria-label="تعليم «${esc(x.title)}» كمنجزة" ${e.closed?'disabled':''}>${x.done?ic('check','s'):''}</button><div class="grow"><div class="b ${x.done?'strike':''}">${esc(x.title)}</div><div class="ts">${x.due?'مستحقة '+dm(x.due):'بلا موعد'}${x.owner?' · '+esc(x.owner):''}</div></div>${!x.done&&x.due?(late(x)?`<span class="chip err">${ic('alert','s')}متأخرة</span>`:`<span class="chip neu">${countdown({date:x.due})}</span>`):''}${e.closed?'':`<button class="ib" data-a="tmenu" data-tid="${x.id}" aria-label="خيارات المهمة">${ic('dots','s')}</button>`}</div>`).join('')||'<div class="li ts">لا مهام في هذه المرحلة. أضف واحدة من الأسفل.</div>'}</div>`};
+  }
+  /* budget */
+  const sp=spent(e),rem=e.budget-sp,p=pct(e),bs=bstate(p);
+  const byCat={};e.expenses.forEach(x=>byCat[x.cat]=(byCat[x.cat]||0)+x.amount);
+  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);const mx=cats.length?cats[0][1]:1;
+  const pend=e.expenses.filter(x=>x.pending).length;
+  return {h,f:e.closed?'':`<button class="btn pri" data-a="exadd">${ic('plus','s')}تسجيل نفقة</button>`,b:`${ro}
+    ${pend?`<div class="banner warn">${ic('wifioff','s')}<span><b>${S.offline?'لا يوجد اتصال بالإنترنت.':'جارٍ المزامنة…'}</b> ${plural(pend,'نفقة واحدة محفوظة','نفقتان محفوظتان','نفقات محفوظة','نفقة محفوظة')} على هذا الجهاز وستُرسل تلقائياً عند عودة الاتصال.</span></div>`:''}
+    <div class="card" style="text-align:center;padding:16px" id="bcard">
+      ${e.budget?`<div class="ts">${rem>=0?'المتبقي من الميزانية':'تجاوزت الميزانية بـ'}</div><div class="num" style="font-size:calc(30*var(--u));font-weight:800;color:var(--${bs});line-height:1.3">${money(Math.abs(rem))} <span style="font-size:calc(14*var(--u))">دج</span></div>
+      <div class="bar ${bs}" style="margin:8px 0 5px"><span style="width:${Math.min(p,100)}%"></span></div><div class="between ts num"><span>مصروف ${money(sp)} (${p}%)</span><span>من ${money(e.budget)} دج</span></div>`:`<div class="ts">لم تُحدَّد ميزانية</div><div class="num" style="font-size:calc(26*var(--u));font-weight:800">${money(sp)} دج مصروفة</div><button class="btn ghost sm" data-a="edit" data-id="${e.id}">تحديد ميزانية</button>`}</div>
+    ${cats.length?`<div class="card" style="display:flex;flex-direction:column;gap:6px"><div class="sec-t">حسب الفئة</div>${cats.map(([k,v])=>`<div><div class="between ts"><span>${k}</span><b class="num" style="color:var(--ink)">${money(v)}</b></div><div class="bar"><span style="width:${Math.round(v/mx*100)}%"></span></div></div>`).join('')}</div>`:''}
+    <div class="sec-t">النفقات (${e.expenses.length})</div>
+    <div class="card" style="padding:2px 12px">${e.expenses.slice().sort((a,b)=>a.date<b.date?1:-1).map(x=>`<div class="li ${x.id===S.ui.lastEx?'hl':''}"><div class="grow"><div class="b">${esc(x.label||x.cat)}</div><div class="ts">${esc(x.cat)} · ${x.date===TODAY?'اليوم':dm(x.date)}</div></div>${x.pending?`<span class="chip warn">${ic('sync','s')}بانتظار المزامنة</span>`:''}<b class="num">${money(x.amount)}</b></div>`).join('')||'<div class="li ts">لا نفقات بعد. سجّل أول نفقة من الزر أدناه.</div>'}</div>`};
+};
+SCR.create=(t,wide)=>{
+  const d=t.dr,er=t.er||{},step=t.step;const isEdit=!!t.edit;
+  const title=isEdit?'تعديل الفعالية':'فعالية جديدة';
+  const h=`<header class="ab"><button class="ib" data-a="cclose" aria-label="إغلاق">${ic(step>1&&!isEdit?'back':'x')}</button><h1>${title}</h1><span class="ts">الخطوة ${step} من 3</span></header>`;
+  const bar=`<div class="step" aria-hidden="true">${[1,2,3].map(i=>`<span class="${i<=step?'on':''}"></span>`).join('')}</div><div class="ts" style="margin-top:-6px">الأساسيات ← المدعوون والميزانية ← المراجعة</div>`;
+  const errN=Object.keys(er).length;const errB=errN?`<div class="banner err" role="alert">${ic('alert','s')}<span>${errN===1?'يوجد خطأ واحد':errN===2?'يوجد خطآن':`يوجد ${errN} أخطاء`} في النموذج. صحّحه للمتابعة.</span></div>`:'';
+  const E=k=>er[k]?`<div class="help err">${ic('alert','s')}${er[k]}</div>`:'';
+  if(step===1) return {h,f:`<button class="btn pri" data-a="cnext">التالي: المدعوون والميزانية</button>`,b:`${bar}${errB}
+    <div><span class="lbl">نوع الفعالية <em>*</em></span><div class="typegrid" role="radiogroup" aria-label="نوع الفعالية">${Object.entries(TYPES).map(([k,v])=>`<button class="tcard" role="radio" aria-checked="${d.type===k}" data-a="ctype" data-v="${k}">${ic(v.i)}${v.l}</button>`).join('')}</div>${E('type')}</div>
+    <div><label class="lbl" for="cName">اسم الفعالية <em>*</em></label><input class="inp ${er.name?'error':''}" id="cName" data-in="c.name" value="${esc(d.name)}" placeholder="مثال: عيد ميلاد أمي الستين" autocomplete="off">${E('name')}</div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:8px"><div><label class="lbl" for="cDate">التاريخ <em>*</em></label><input class="inp ${er.date?'error':''}" id="cDate" type="date" data-in="c.date" value="${esc(d.date)}" min="${TODAY}"></div><div><label class="lbl" for="cTime">الوقت</label><input class="inp" id="cTime" type="time" data-in="c.time" value="${esc(d.time)}"></div></div>${E('date')}
+    <div><label class="lbl" for="cPlace">المكان</label><input class="inp" id="cPlace" data-in="c.place" value="${esc(d.place)}" placeholder="مثال: منزل العائلة"><div class="help">اختياري · يمكن تحديده لاحقاً</div></div>`};
+  if(step===2) return {h,f:`<button class="btn out" data-a="cprev" style="flex:.5">رجوع</button><button class="btn pri" data-a="cnext">التالي: المراجعة</button>`,b:`${bar}${errB}
+    <div><label class="lbl" for="cBudget">الميزانية القصوى (دج)</label><input class="inp num ${er.budget?'error':''}" id="cBudget" inputmode="numeric" data-in="c.budget" value="${esc(d.budget)}" placeholder="مثال: 60000">${E('budget')||'<div class="help">ستنبّهك «مُناسَبة» عند بلوغ 80% منها</div>'}</div>
+    <div><span class="lbl">عدد المدعوين المتوقَّع</span><div class="stepper"><button data-a="cexp" data-d="-1" aria-label="إنقاص">−</button><b class="num" aria-live="polite">${d.expected}</b><button data-a="cexp" data-d="1" aria-label="زيادة">+</button></div></div>
+    ${isEdit?'':`<div><span class="lbl">الخدمات المطلوبة <span class="ts">(اختر ما يلزم)</span></span><div class="wrap">${SERVICES.map(s=>`<button class="ck" data-a="csvc" data-v="${s}" aria-pressed="${d.services.includes(s)}">${d.services.includes(s)?ic('check','s'):''}${s}</button>`).join('')}</div><div class="help">تُنشأ لكل خدمة مهمة تلقائياً في مرحلة «قبل»</div></div>`}
+    <button class="between ts b" style="color:var(--p-700);width:100%" data-a="cadv" aria-expanded="${!!t.adv}"><span>خيارات متقدمة (التذكيرات)</span>${ic('chevd','s')}</button>
+    ${t.adv?`<div class="card between"><span>تذكير المدعوين المعلّقين تلقائياً بعد 3 أيام</span><button class="toggle" role="switch" aria-checked="${d.autoRemind}" data-a="cauto" aria-label="تذكير تلقائي"></button></div>`:''}`};
+  const row=(l,v)=>`<div class="li"><span class="ts" style="width:110px">${l}</span><b class="grow">${v}</b></div>`;
+  return {h,f:`<button class="btn out" data-a="cprev" style="flex:.5">رجوع</button><button class="btn pri" data-a="csave">${isEdit?'حفظ التعديلات':'إنشاء الفعالية'}</button>`,b:`${bar}
+    <div class="card" style="padding:4px 12px">${row('النوع',TYPES[d.type].l)}${row('الاسم',esc(d.name))}${row('التاريخ',`${dayName(d.date)} ${dmy(d.date)}${d.time?' · '+esc(d.time):''}`)}${row('المكان',esc(d.place)||'—')}${row('الميزانية',d.budget?money(+d.budget)+' دج':'—')}${row('المدعوون المتوقَّعون',d.expected)}${isEdit?'':row('الخدمات',d.services.join('، ')||'—')}</div>
+    ${PRO.has(d.type)?`<div class="banner info">${ic('award','s')}<span>فعالية مهنية: ستتمكن من إرسال شهادات الحضور عند إغلاقها.</span></div>`:''}`};
+};
+SCR.close=(t,wide)=>{
+  const e=ev(t.id);const cd=S.cd;const pro=PRO.has(e.type);
+  const att=e.guests.filter(g=>cd.att.has(g.id));const withMail=att.filter(g=>g.contact.includes('@'));
+  const open=e.tasks.filter(x=>!x.done).length;const sp=spent(e);
+  const k=(v,l,col)=>`<div class="kpi" style="text-align:right;padding:9px 11px"><b class="num" style="color:var(--${col||'ink'})">${v}</b>${l}</div>`;
+  return {h:hdr('إغلاق الفعالية'),f:`<button class="btn pri" data-a="cfinish">${ic('archive','s')}${pro&&cd.cert?`إغلاق وإرسال ${N(withMail.length,'شهادة')}`:'إغلاق وأرشفة'}</button>`,b:`
+    <div class="sec-t">الحصيلة — ${esc(e.name)}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${k(`${att.length} / ${e.guests.length}`,'حضروا')}${k(e.budget?money(sp):'—',e.budget?`دج من ${money(e.budget)}`:'لا ميزانية',e.budget?bstate(pct(e)):'')}${k(`${doneN(e)} / ${e.tasks.length}`,'مهام منجزة')}${k(e.budget?money(Math.max(0,e.budget-sp)):'—','دج لم تُصرف')}</div>
+    ${open?`<div class="banner warn">${ic('alert','s')}<span>${plural(open,'بقيت مهمة واحدة غير منجزة','بقيت مهمتان غير منجزتين','مهام غير منجزة','مهمة غير منجزة')}. يمكنك الإغلاق على أي حال، أو <button class="b" style="color:var(--p-700);text-decoration:underline" data-a="cdoneall">تعليمها كلها منجزة</button>.</span></div>`:`<div class="banner ok">${ic('check','s')}<span>كل المهام منجزة — يمكنك الإغلاق.</span></div>`}
+    <div class="sec-t">من حضر فعلاً؟</div>
+    <div class="card" style="padding:2px 12px">${e.guests.filter(g=>g.status!=='d').map(g=>`<div class="li"><button class="cb" role="checkbox" aria-checked="${cd.att.has(g.id)}" data-a="catt" data-gid="${g.id}" aria-label="حضر ${esc(g.name)}">${cd.att.has(g.id)?ic('check','s'):''}</button><div class="grow"><div class="b">${esc(g.name)}</div><div class="ts" dir="auto" style="text-align:right">${pro?(g.contact||''):esc(g.rel)}</div></div>${pro&&cd.att.has(g.id)&&!g.contact.includes('@')?`<span class="chip warn">${ic('alert','s')}بلا بريد</span>`:''}</div>`).join('')}</div>
+    ${pro?`<div class="card between"><div class="flex">${ic('award')}<div><div class="b">إرسال شهادات الحضور</div><div class="ts">${N(withMail.length,'شهادة')} بالبريد${att.length-withMail.length?` · ${N(att.length-withMail.length,'مدعو')} بلا بريد لن تصلهم`:''}</div></div></div><button class="toggle" role="switch" aria-checked="${cd.cert}" data-a="ccert" aria-label="إرسال الشهادات"></button></div>`
+      :`<div class="card between"><div class="flex">${ic('send')}<div><div class="b">رسالة شكر للحاضرين</div><div class="ts">${N(att.length,'مدعو')} · عبر SMS</div></div></div><button class="toggle" role="switch" aria-checked="${cd.thanks}" data-a="cthanks" aria-label="رسالة شكر"></button></div>`}
+    <div class="sec-t">كيف كانت الفعالية؟</div>
+    <div class="stars" role="radiogroup" aria-label="التقييم">${[1,2,3,4,5].map(i=>`<button class="${i<=cd.rating?'on':''}" role="radio" aria-checked="${i===cd.rating}" data-a="rate" data-v="${i}" aria-label="${i} من 5">${ic('star')}</button>`).join('')}</div>
+    <label class="lbl" for="cNotes">ماذا ستغيّر في المرة القادمة؟ <span class="ts">(اختياري)</span></label><textarea class="inp" id="cNotes" data-in="cnotes">${esc(cd.notes)}</textarea>`};
+};
+SCR.account=(t,wide)=>({h:hdr('حسابي',{noBack:1}),tabs:1,b:`
+  <div class="card flex"><span class="av" style="width:46px;height:46px;font-size:18px">${esc(S.user.first[0])}</span><div><div class="b">${esc(S.user.full)}</div><div class="ts">${esc(S.user.role)}</div></div></div>
+  <div class="sec-t">إمكانية الوصول</div>
+  <div class="card between"><div><div class="b">وضع الوضوح</div><div class="ts">خط أكبر بنسبة 130%، أزرار أكبر، حدود أوضح</div></div><button class="toggle" role="switch" aria-checked="${S.clarity}" data-a="clarity" aria-label="وضع الوضوح"></button></div>
+  <div class="sec-t">سلة المحذوفات <span class="ts">(تُحفظ 30 يوماً)</span></div>
+  <div class="card" style="padding:2px 12px">${S.trash.map(e=>`<div class="li">${evIcon(e)}<div class="grow"><div class="b">${esc(e.name)}</div><div class="ts">${dmy(e.date)}</div></div><button class="btn sec sm" data-a="restore" data-id="${e.id}">استعادة</button></div>`).join('')||'<div class="li ts">السلة فارغة.</div>'}</div>
+  <div class="ts">العملة: الدينار الجزائري (دج) · اللغة: العربية</div>`});
+
+/* ---------- overlays ---------- */
+const OV={};
+const scrim=(inner,center)=>`<div class="scrim ${center?'center':''}" data-a="ovclose">${inner}</div>`;
+OV.menu=()=>{const e=ev(S.ov.id);return scrim(`<div class="sheet" role="dialog" aria-label="خيارات الفعالية"><div class="grab"></div><b>${esc(e.name)}</b>
+  <button class="mrow" data-a="edit" data-id="${e.id}">${ic('edit')}تعديل الفعالية</button>
+  <button class="mrow" data-a="close" data-id="${e.id}">${ic('award')}إغلاق الفعالية${PRO.has(e.type)?' وإرسال الشهادات':''}</button>
+  <button class="mrow" style="color:var(--err)" data-a="del" data-id="${e.id}">${ic('trash')}حذف الفعالية</button>
+  <button class="btn out" data-a="ovx">إلغاء</button></div>`)};
+OV.del=()=>{const e=ev(S.ov.id);const n=e.guests.length,m=e.tasks.length,x=e.expenses.length;return scrim(`<div class="dialog" role="alertdialog" aria-labelledby="dt"><div class="dico" style="background:var(--err-50);color:var(--err)">${ic('trash','l')}</div><h3 id="dt" style="text-align:center">حذف «${esc(e.name)}»؟</h3><p style="text-align:center">ستُحذف معها <b>${N(n,'دعوة')}</b> و<b>${N(m,'مهمة')}</b> و<b>${N(x,'نفقة')}</b>. يمكنك استعادتها من «سلة المحذوفات» خلال 30 يوماً.</p><div class="flex"><button class="btn out" style="flex:1" data-a="ovx" id="delCancel">إلغاء</button><button class="btn dan" style="flex:1" data-a="delok">حذف الفعالية</button></div></div>`,1)};
+OV.unsaved=()=>{const t=top();const isEdit=!!t.edit;const ch=t.edit?changed(t):[];return scrim(`<div class="dialog" role="alertdialog" aria-labelledby="ut"><h3 id="ut">${isEdit?'لديك تعديلات غير محفوظة':'إلغاء إنشاء الفعالية؟'}</h3><p>${isEdit?`غيّرت <b>${ch.join('</b> و<b>')||'بعض الحقول'}</b>. ماذا تريد أن تفعل قبل المغادرة؟`:'ما أدخلته حتى الآن سيضيع.'}</p>${isEdit?'<button class="btn pri" data-a="usave">حفظ والخروج</button>':''}<button class="btn out" data-a="ovx">متابعة ${isEdit?'التعديل':'الإنشاء'}</button><button class="btn ghost" style="color:var(--err)" data-a="udiscard">${isEdit?'تجاهل التعديلات':'تجاهل والخروج'}</button></div>`,1)};
+OV.tmenu=()=>{const e=ev(top().id);const x=e.tasks.find(y=>y.id===S.ov.tid);return scrim(`<div class="sheet" role="dialog" aria-label="خيارات المهمة"><div class="grab"></div><b>${esc(x.title)}</b><span class="lbl">نقل إلى مرحلة</span><div class="seg">${Object.entries(PH).map(([k,l])=>`<button data-a="tmove" data-v="${k}" aria-pressed="${x.phase===k}">${l}</button>`).join('')}</div><button class="mrow" style="color:var(--err)" data-a="tdel">${ic('trash')}حذف المهمة</button><button class="btn out" data-a="ovx">إغلاق</button></div>`)};
+OV.exp=()=>{const o=S.ov;const e=ev(top().id);const amt=+o.amt||0;const rem=e.budget-spent(e);const after=rem-amt;const over=e.budget&&amt>0&&after<0;
+  return scrim(`<div class="sheet" role="dialog" aria-labelledby="xt"><div class="grab"></div><div class="between"><b id="xt" style="font-size:calc(16*var(--u))">نفقة جديدة</b><button class="ib" data-a="ovx" aria-label="إغلاق">${ic('x')}</button></div>
+    <div><label class="lbl" for="xAmt" style="text-align:center">المبلغ (دج)</label><input class="amount ${over?'over':''}" id="xAmt" inputmode="numeric" data-in="xamt" value="${o.amt?money(+o.amt):''}" placeholder="0" autocomplete="off">${o.er&&o.er.amt?`<div class="help err" style="justify-content:center">${ic('alert','s')}${o.er.amt}</div>`:''}</div>
+    <div><span class="lbl">الفئة</span><div class="wrap" role="radiogroup" aria-label="الفئة">${CATS.map(c=>`<button class="ck" role="radio" aria-checked="${o.cat===c}" data-a="xcat" data-v="${c}">${o.cat===c?ic('check','s'):''}${c}</button>`).join('')}</div>${o.er&&o.er.cat?`<div class="help err">${ic('alert','s')}${o.er.cat}</div>`:''}</div>
+    <input class="inp" id="xDesc" data-in="xdesc" value="${esc(o.desc)}" placeholder="وصف (اختياري)" aria-label="وصف النفقة">
+    ${!e.budget?'':over?`<div class="banner warn" role="alert">${ic('alert','s')}<span><b>ستتجاوز الميزانية بـ ${money(-after)} دج.</b> المتبقي حالياً ${money(rem)} دج. يمكنك الحفظ على أي حال أو تعديل المبلغ.</span></div>`
+      :amt>0?`<div class="banner info">${ic('info','s')}<span>بعد الحفظ سيصبح المتبقي <b>${money(after)} دج</b> (${Math.round((spent(e)+amt)/e.budget*100)}% مصروفة)</span></div>`:''}
+    ${S.offline?`<div class="banner warn">${ic('wifioff','s')}<span>لا يوجد اتصال. ستُحفظ النفقة على الجهاز وتُرسل لاحقاً.</span></div>`:''}
+    <div class="ts flex">${ic('cal','s')}التاريخ: اليوم ${dm(TODAY)}</div>
+    ${over?`<div class="flex"><button class="btn out" style="flex:1" data-a="xfix">تعديل المبلغ</button><button class="btn wrn" style="flex:1" data-a="xsave">حفظ رغم التجاوز</button></div><button class="btn ghost sm" data-a="xraise">رفع الميزانية إلى ${money(spent(e)+amt)} دج ثم الحفظ</button>`:`<button class="btn pri" data-a="xsave">حفظ النفقة</button>`}</div>`)};
+OV.guest=()=>{const o=S.ov;const e=ev(top().id);const pro=PRO.has(e.type);const er=o.er||{};const E=k=>er[k]?`<div class="help err">${ic('alert','s')}${er[k]}</div>`:'';
+  const dup=o.dup?e.guests.find(g=>g.id===o.dup):null;
+  return scrim(`<div class="sheet" role="dialog" aria-labelledby="gt"><div class="grab"></div><div class="between"><b id="gt" style="font-size:calc(16*var(--u))">إضافة مدعو</b><button class="ib" data-a="ovx" aria-label="إغلاق">${ic('x')}</button></div>
+    <div><label class="lbl" for="gName">الاسم <em>*</em></label><input class="inp ${er.name?'error':''}" id="gName" data-in="gname" value="${esc(o.name)}" placeholder="مثال: ليلى بن علي" autocomplete="off">${E('name')}</div>
+    <div><label class="lbl" for="gContact">${pro?'البريد الإلكتروني':'رقم الهاتف'}</label><input class="inp ${er.contact?'error':''}" id="gContact" data-in="gcontact" dir="ltr" style="text-align:right" inputmode="${pro?'email':'tel'}" value="${esc(o.contact)}" placeholder="${pro?'name@mail.com':'0550 12 34 56'}">${E('contact')||`<div class="help">${pro?'لإرسال الدعوة وشهادة الحضور':'لإرسال الدعوة بالرسائل القصيرة'}</div>`}</div>
+    <div><label class="lbl" for="gRel">${pro?'المؤسسة':'صلة القرابة'}</label><input class="inp" id="gRel" data-in="grel" value="${esc(o.rel)}" placeholder="${pro?'مثال: جامعة باتنة 2':'مثال: ابن العم'}"></div>
+    ${dup?`<div class="card" style="border-color:var(--warn)"><div class="flex b" style="color:var(--warn)">${ic('users','s')}مدعو مكرَّر</div><p class="ts" style="margin:4px 0 8px">«${esc(dup.name)}» موجود في القائمة${dup.contact&&dup.contact===norm(o.contact,pro)?' بالرقم نفسه':''}.</p><div class="flex"><button class="btn out sm" style="flex:1" data-a="gshowdup">فتح بطاقته</button><button class="btn sec sm" style="flex:1" data-a="gforce">إضافة رغم ذلك</button></div></div>`:''}
+    <button class="btn pri" data-a="gsave">إضافة إلى قائمة المدعوين</button></div>`)};
+OV.cert=()=>{const e=ev(top().id);const n=e.guests.filter(g=>S.cd.att.has(g.id)&&g.contact.includes('@')).length;return scrim(`<div class="dialog" role="alertdialog" aria-labelledby="ct"><div class="dico" style="background:var(--p-50);color:var(--p)">${ic('award','l')}</div><h3 id="ct" style="text-align:center">إرسال ${N(n,'شهادة')} حضور؟</h3><p style="text-align:center">ستصل كل شهادة بصيغة PDF إلى بريد الحاضر، ثم تُؤرشف «${esc(e.name)}». لا يمكن سحب الشهادات بعد إرسالها.</p><div class="flex"><button class="btn out" style="flex:1" data-a="ovx">مراجعة القائمة</button><button class="btn pri" style="flex:1" data-a="cconfirm">${ic('send','s')}إرسال وإغلاق</button></div></div>`,1)};
+
+/* ---------- helpers for forms ---------- */
+const norm=(v,pro)=>pro?String(v||'').trim().toLowerCase():String(v||'').replace(/\D/g,'');
+function changed(t){const e=ev(t.edit),d=t.dr,r=[];if(d.name!==e.name)r.push('الاسم');if(d.type!==e.type)r.push('النوع');if(d.date!==e.date)r.push('التاريخ');if(d.time!==e.time)r.push('الوقت');if(d.place!==e.place)r.push('المكان');if(String(d.budget||0)!==String(e.budget||0))r.push('الميزانية');if(d.expected!==e.expected)r.push('عدد المدعوين');return r}
+function validate(t){const d=t.dr,er={};
+  if(t.step===1){if(!d.type)er.type='اختر نوع الفعالية.';if(!d.name.trim())er.name='اسم الفعالية مطلوب.';if(!d.date)er.date='التاريخ مطلوب.';else if(d.date<TODAY)er.date=`هذا التاريخ مضى. اختر ${dm(TODAY)} أو بعده.`}
+  if(t.step===2){if(d.budget!==''&&!/^\d+$/.test(String(d.budget).replace(/[,\s]/g,'')))er.budget='أدخل رقماً بلا رموز، مثل 60000.'}
+  t.er=er;return !Object.keys(er).length}
+function saveCreate(t){const d=t.dr;const budget=+String(d.budget||'0').replace(/[,\s]/g,'')||0;
+  if(t.edit){const e=ev(t.edit);Object.assign(e,{type:d.type,name:d.name.trim(),date:d.date,time:d.time,place:d.place.trim(),budget,expected:d.expected});mark('edit_or_delete');S.stack.pop();S.ov=null;snack('حُفظت التعديلات');return}
+  const e={id:uid(),type:d.type,name:d.name.trim(),date:d.date,time:d.time||'18:00',place:d.place.trim(),budget,expected:d.expected,closed:false,guests:[],expenses:[],
+    tasks:d.services.map(s=>({id:uid(),title:(s==='قاعة'?'حجز القاعة':s==='نقل'?'تنظيم النقل':'حجز '+s),phase:'before',due:'',done:false,owner:''}))};
+  S.events.push(e);mark('create');const sec=Math.max(1,Math.round((Date.now()-t.t0)/1000));
+  S.stack.pop();go('event',{id:e.id,tab:'guests'});snack(`أُنشئت الفعالية في ${sec} ثانية. أضف المدعوين الآن.`)}
+function archive(e){e.closed=true;e.rating=S.cd.rating;e.notes=S.cd.notes;e.attended=[...S.cd.att];mark('close');root('home');}
+
+/* ---------- actions ---------- */
+const A={
+  noop(){},
+  root(d){root(d.n);if(d.n==='calendar')mark('_cal')},
+  back(){back()},
+  undo(){const u=S.snack&&S.snack.undo;S.snack=null;if(u)u()},
+  ovclose(){S.ov=null},ovx(){S.ov=null},
+  open(d){go('event',{id:d.id,tab:d.tab||'overview'});mark('open')},
+  opentask(d){const e=ev(d.id);const x=e.tasks.find(y=>y.id===d.tid);go('event',{id:d.id,tab:'tasks',ph:x.phase,hl:x.id});mark('open')},
+  calopen(d){go('event',{id:d.id,tab:'overview'});mark('open');mark('calday')},
+  caltask(d){A.opentask(d);mark('calday')},
+  calsel(d){const t=top();t.sel=d.d;const x=D(d.d);t.ym=[x.getFullYear(),x.getMonth()]},
+  calnav(d){const t=top();let [y,m]=t.ym;m+=+d.d;if(m<0){m=11;y--}if(m>11){m=0;y++}t.ym=[y,m];t.sel=ISO(new Date(y,m,1));t.view='month'},
+  caltoday(){const t=top();t.ym=[2026,10];t.sel=TODAY},
+  calview(d){top().view=d.v},
+  tab(d){top().tab=d.v;top().hl=null;S.ui.gexp=null},
+  create(){go('create',{step:1,dr:{type:'',name:'',date:'',time:'',place:'',budget:'',expected:15,services:[],autoRemind:true},er:{},t0:Date.now(),dirty:false});S._focus='cName'},
+  edit(d){const e=ev(d.id);go('create',{step:1,edit:e.id,dr:{type:e.type,name:e.name,date:e.date,time:e.time,place:e.place,budget:e.budget?String(e.budget):'',expected:e.expected||e.guests.length,services:[],autoRemind:true},er:{},t0:Date.now(),dirty:false})},
+  ctype(d){const t=top();t.dr.type=d.v;t.dirty=true;if(t.er)delete t.er.type},
+  cexp(d){const t=top();t.dr.expected=Math.max(0,t.dr.expected+(+d.d));t.dirty=true},
+  csvc(d){const t=top(),s=t.dr.services,i=s.indexOf(d.v);i<0?s.push(d.v):s.splice(i,1);t.dirty=true},
+  cadv(){const t=top();t.adv=!t.adv},cauto(){const t=top();t.dr.autoRemind=!t.dr.autoRemind},
+  cnext(){const t=top();if(validate(t)){t.step++;t.er={}}else{const f={type:null,name:'cName',date:'cDate',budget:'cBudget'}[Object.keys(t.er)[0]];if(f)S._focus=f}},
+  cprev(){const t=top();t.step--;t.er={}},
+  cclose(){const t=top();if(t.step>1&&!t.edit){t.step--;t.er={};return}if(t.dirty&&(!t.edit||changed(t).length))S.ov={t:'unsaved'};else S.stack.pop()},
+  csave(){saveCreate(top())},
+  usave(){const t=top();t.step=1;if(!validate(t)){S.ov=null;return}t.step=2;if(!validate(t)){S.ov=null;return}saveCreate(t)},
+  udiscard(){S.ov=null;S.stack.pop()},
+  menu(d){S.ov={t:'menu',id:d.id}},
+  del(d){S.ov={t:'del',id:d.id};S._focus='delCancel'},
+  delok(){const e=ev(S.ov.id);S.events=S.events.filter(x=>x!==e);S.trash.unshift(e);mark('edit_or_delete');root('home');
+    snack(`حُذفت «${e.name}» ونُقلت إلى سلة المحذوفات`,()=>{S.trash=S.trash.filter(x=>x!==e);S.events.push(e)})},
+  restore(d){const e=S.trash.find(x=>x.id===d.id);S.trash=S.trash.filter(x=>x!==e);S.events.push(e);snack(`استُعيدت «${e.name}»`)},
+  close(d){const e=ev(d.id);S.cd={att:new Set(e.guests.filter(g=>g.status==='c').map(g=>g.id)),cert:true,thanks:true,rating:0,notes:''};go('close',{id:e.id})},
+  catt(d){const s=S.cd.att;s.has(d.gid)?s.delete(d.gid):s.add(d.gid)},
+  ccert(){S.cd.cert=!S.cd.cert},cthanks(){S.cd.thanks=!S.cd.thanks},
+  rate(d){S.cd.rating=+d.v},
+  cdoneall(){const e=ev(top().id);const was=e.tasks.filter(x=>!x.done);was.forEach(x=>x.done=true);snack(`عُلّمت ${N(was.length,'مهمة')} كمنجزة`,()=>was.forEach(x=>x.done=false))},
+  cfinish(){const e=ev(top().id);if(PRO.has(e.type)&&S.cd.cert){S.ov={t:'cert'};return}archive(e);snack(`أُغلقت «${e.name}» وأُرشفت${S.cd.thanks?' · أُرسلت رسالة الشكر':''}`,()=>{e.closed=false})},
+  cconfirm(){const e=ev(top().id);const n=e.guests.filter(g=>S.cd.att.has(g.id)&&g.contact.includes('@')).length;archive(e);snack(`أُرسلت ${N(n,'شهادة')} حضور وأُرشفت «${e.name}»`)},
+  remind(d){const e=ev(d.id);const n=cnt(e).p;if(S.offline){snack('لا يوجد اتصال. سيُرسل التذكير عند عودة الاتصال.');return}snack(`أُرسل تذكير إلى ${N(n,'مدعو')} لم يردّوا بعد`)},
+  gfilter(d){const t=top();t.f=t.f===d.v?'all':d.v},
+  gexp(d){S.ui.gexp=S.ui.gexp===d.gid?null:d.gid},
+  gstatus(d){const e=ev(top().id);const g=e.guests.find(x=>x.id===d.gid);const old=g.status;if(old===d.v){S.ui.gexp=null;return}g.status=d.v;S.ui.gexp=null;mark('guest_status');snack(`«${g.name}»: ${ST[d.v].l}`,()=>{g.status=old})},
+  gadd(){S.ov={t:'guest',name:'',contact:'',rel:'',er:{}};S._focus='gName'},
+  gsave(){gsave(false)},gforce(){gsave(true)},
+  gshowdup(){const g=ev(top().id).guests.find(x=>x.id===S.ov.dup);S.ov=null;S.ui.q=g.name;top().f='all'},
+  tph(d){const t=top();t.ph=d.v;t.hl=null;S.ui.qph=d.v},
+  ttoggle(d){const e=ev(d.id);const x=e.tasks.find(y=>y.id===d.tid);x.done=!x.done;mark('task_status');snack(x.done?`أُنجزت «${x.title}»`:`أُعيدت «${x.title}» إلى قيد الإنجاز`,()=>{x.done=!x.done})},
+  tadd(){taddNow()},
+  tmenu(d){S.ov={t:'tmenu',tid:d.tid}},
+  tmove(d){const x=ev(top().id).tasks.find(y=>y.id===S.ov.tid);x.phase=d.v;S.ov=null;mark('task_status');snack(`نُقلت «${x.title}» إلى مرحلة «${PH[d.v]}»`)},
+  tdel(){const e=ev(top().id);const x=e.tasks.find(y=>y.id===S.ov.tid);e.tasks=e.tasks.filter(y=>y!==x);S.ov=null;snack(`حُذفت «${x.title}»`,()=>e.tasks.push(x))},
+  exadd(){S.ov={t:'exp',amt:'',cat:'',desc:'',er:{}};S._focus='xAmt'},
+  xcat(d){S.ov.cat=d.v;if(S.ov.er)delete S.ov.er.cat},
+  xfix(){S._focus='xAmt'},
+  xsave(){xsave(false)},xraise(){xsave(true)},
+  clarity(){S.clarity=!S.clarity},
+};
+function gsave(force){const o=S.ov;const e=ev(top().id);const pro=PRO.has(e.type);const er={};const c=o.contact.trim();
+  if(!o.name.trim())er.name='الاسم مطلوب.';
+  if(c){if(pro&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c))er.contact='البريد ناقص: أضف @ واسم النطاق، مثل name@mail.com';
+    if(!pro&&!/^0[567]\d{8}$/.test(c.replace(/\s/g,'')))er.contact='رقم الهاتف يجب أن يتكون من 10 أرقام ويبدأ بـ 05 أو 06 أو 07.'}
+  o.er=er;if(Object.keys(er).length){S._focus=er.name?'gName':'gContact';return}
+  if(!force){const nm=o.name.trim(),nc=norm(c,pro);const dup=e.guests.find(g=>g.name.trim()===nm||(nc&&norm(g.contact,pro)===nc));if(dup){o.dup=dup.id;return}}
+  const g={id:uid(),name:o.name.trim(),rel:o.rel.trim(),contact:pro?c:c.replace(/\s/g,''),status:'p'};e.guests.unshift(g);S.ov=null;mark('guest_add');top().f='all';S.ui.q='';
+  snack(`أُضيف «${g.name}» — الحالة: معلّق. انقر على الحالة لتغييرها.`,()=>{e.guests=e.guests.filter(x=>x!==g)})}
+function taddNow(){const t=top();const e=ev(t.id);const v=(S.ui.qtask||'').trim();if(!v){S._focus='qTask';return}
+  const ph=S.ui.qph||t.ph||'before';const x={id:uid(),title:v,phase:ph,due:'',done:false,owner:''};e.tasks.push(x);S.ui.qtask='';t.ph=ph;t.hl=x.id;mark('task_add');S._focus='qTask';
+  snack(`أُضيفت «${v}» إلى مرحلة «${PH[ph]}»`,()=>{e.tasks=e.tasks.filter(y=>y!==x)})}
+function xsave(raise){const o=S.ov;const e=ev(top().id);const er={};const amt=+o.amt||0;
+  if(!amt)er.amt='أدخل المبلغ بالدينار.';if(!o.cat)er.cat='اختر فئة النفقة.';o.er=er;if(Object.keys(er).length){if(er.amt)S._focus='xAmt';return}
+  const oldB=e.budget;if(raise)e.budget=spent(e)+amt;
+  const x={id:uid(),label:o.desc.trim()||o.cat,cat:o.cat,amount:amt,date:TODAY,pending:S.offline};e.expenses.push(x);S.ov=null;S.ui.lastEx=x.id;mark('expense');
+  const rem=e.budget-spent(e);
+  snack(`${S.offline?'حُفظت على الجهاز':'حُفظت النفقة'} · ${rem>=0?'المتبقي '+money(rem):'تجاوز بـ '+money(-rem)} دج`,()=>{e.expenses=e.expenses.filter(y=>y!==x);e.budget=oldB})}
+
+/* ---------- inputs ---------- */
+const IN={
+  q(v){S.ui.q=v;render()},
+  'c.name'(v){const t=top();t.dr.name=v;t.dirty=true},
+  'c.date'(v){const t=top();t.dr.date=v;t.dirty=true},
+  'c.time'(v){const t=top();t.dr.time=v;t.dirty=true},
+  'c.place'(v){const t=top();t.dr.place=v;t.dirty=true},
+  'c.budget'(v){const t=top();t.dr.budget=v.replace(/[^\d]/g,'');t.dirty=true},
+  qtask(v){S.ui.qtask=v},qph(v){S.ui.qph=v},
+  cnotes(v){S.cd.notes=v},
+  xamt(v,el){const digits=v.replace(/[^\d٠-٩]/g,'').replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c));S.ov.amt=digits.slice(0,9);if(S.ov.er)delete S.ov.er.amt;render();const i=$('#xAmt');if(i){i.focus();const L=i.value.length;i.setSelectionRange(L,L)}},
+  xdesc(v){S.ov.desc=v},
+  gname(v){S.ov.name=v;S.ov.dup=null},gcontact(v){S.ov.contact=v;S.ov.dup=null},grel(v){S.ov.rel=v},
+};
+document.addEventListener('click',ev_=>{const el=ev_.target.closest('[data-a]');if(!el||!$('#page').contains(el))return;const a=el.dataset.a;
+  if(a==='ovclose'&&ev_.target!==el)return;if(el.disabled)return;if(!A[a]&&!P[a])return;ev_.preventDefault();(A[a]||P[a])(el.dataset,el);render()});
+document.addEventListener('input',e=>{const el=e.target;const k=el.dataset&&el.dataset.in;if(k&&IN[k])IN[k](el.value,el)});
+document.addEventListener('change',e=>{const el=e.target;if(el.id==='cDate'||el.id==='qPh')render()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.id==='qTask'){e.preventDefault();taddNow();render();return}
+  if(e.key==='Escape'&&S.ov){S.ov=null;render();return}
+  const tk=e.target.closest&&e.target.closest('.tk');
+  if(tk&&e.altKey&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();const order=['before','during','after'];const x=ev(top().id).tasks.find(y=>y.id===tk.dataset.tid);
+    let i=order.indexOf(x.phase)+(e.key==='ArrowLeft'?1:-1);i=Math.max(0,Math.min(2,i));if(order[i]!==x.phase){x.phase=order[i];mark('task_status');snack(`نُقلت «${x.title}» إلى مرحلة «${PH[x.phase]}»`)}top().hl=x.id;render();const n=document.querySelector(`.tk[data-tid="${x.id}"]`);if(n)n.focus();return}
+  if(tk&&e.key==='Enter'&&e.target===tk){const cb=tk.querySelector('.cb');if(cb)cb.click()}
+  if(e.target.matches&&e.target.matches('tr[data-a]')&&e.key==='Enter'){e.target.click()}
+});
+let dragId=null;
+document.addEventListener('dragstart',e=>{const tk=e.target.closest&&e.target.closest('.tk');if(!tk)return;dragId=tk.dataset.tid;e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',dragId)}catch(_){}});
+document.addEventListener('dragover',e=>{const c=e.target.closest&&e.target.closest('[data-drop]');if(!c||!dragId)return;e.preventDefault();document.querySelectorAll('.col.over').forEach(x=>x!==c&&x.classList.remove('over'));c.classList.add('over')});
+document.addEventListener('drop',e=>{const c=e.target.closest&&e.target.closest('[data-drop]');if(!c||!dragId)return;e.preventDefault();const x=ev(top().id).tasks.find(y=>y.id===dragId);const from=x.phase;
+  if(from!==c.dataset.drop){x.phase=c.dataset.drop;mark('task_status');snack(`نُقلت «${x.title}» إلى مرحلة «${PH[x.phase]}»`,()=>{x.phase=from})}top().hl=x.id;dragId=null;render()});
+document.addEventListener('dragend',()=>{dragId=null;document.querySelectorAll('.col.over').forEach(x=>x.classList.remove('over'))});
+
+/* ---------- bench panel ---------- */
+const PATHS=[['الانتقال من لوحة التحكم إلى إنشاء فعالية',['create']],['فتح تفاصيل فعالية موجودة',['open']],['اختيار يوم في التقويم والوصول إلى الفعالية المرتبطة به',['calday']],['إضافة مدعو وتغيير حالة الدعوة',['guest_add','guest_status']],['إضافة مهمة وتحديث حالة إنجازها',['task_add','task_status']],['تسجيل نفقة وعرض أثرها على الميزانية',['expense']],['تعديل فعالية أو طلب تأكيد حذفها',['edit_or_delete']],['إغلاق فعالية وإرسال شهادات الحضور',['close']]];
+const SCEN={sara:['أنشئي فعالية «عيد ميلاد» من زر + (هدف: أقل من 60 ثانية).','افتحي «قائمة المدعوين» وأضيفي مدعواً.','انقري على حالة دعوة «معلّق» وغيّريها إلى «مؤكَّد».','حدّثي الحضور، ثم سجّلي نفقة من تبويب «الميزانية» وتحققي من المتبقي.'],
+  amin:['أنشئ فعالية من نوع «ندوة» من «فعالية جديدة».','افتح «ندوة التحول الرقمي 2027» ← «المهام» واسحب مهمة بين المراحل.','تابع المواعيد النهائية في «التقويم» (يوم 12 أو 18 نوفمبر).','أغلق الندوة من «⋮ ← إغلاق الفعالية» وأرسل شهادات الحضور.']};
+const P={
+  persona(d){reset(d.v,d.v==='amin');},
+  device(d){S.wide=d.v==='wide'},
+  offline(){S.offline=!S.offline;if(!S.offline){let n=0;S.events.forEach(e=>e.expenses.forEach(x=>{if(x.pending){x.pending=false;n++}}));if(n)snack(`عاد الاتصال · تمت مزامنة ${N(n,'نفقة')}`)}},
+  pclarity(){S.clarity=!S.clarity},
+  resetall(){reset(S.persona,S.wide)},
+};
+function panel(){
+  const done=PATHS.filter(([,k])=>k.every(x=>S.paths[x])).length;
+  $('#panel').innerHTML=`<div><h1>مُناسَبة · النموذج التفاعلي</h1><p>نموذج أولي قابل للنقر لتطبيق إدارة الفعاليات. البيانات أمثلة، وكل التعديلات تبقى داخل هذه الصفحة.</p></div>
+  <div class="pbox"><h2>الشخصية</h2><div class="switch" role="group" aria-label="الشخصية"><button data-a="persona" data-v="sara" aria-pressed="${S.persona==='sara'}">سارة · هاتف</button><button data-a="persona" data-v="amin" aria-pressed="${S.persona==='amin'}">أمين · حاسوب</button></div>
+    ${narrow()?'':`<h2>الجهاز</h2><div class="switch" role="group" aria-label="الجهاز"><button data-a="device" data-v="phone" aria-pressed="${!S.wide}">هاتف</button><button data-a="device" data-v="wide" aria-pressed="${S.wide}">حاسوب</button></div>`}
+    <div class="trow"><span>وضع الوضوح (إمكانية الوصول)</span><button class="toggle" role="switch" aria-checked="${S.clarity}" data-a="pclarity" aria-label="وضع الوضوح"></button></div>
+    <div class="trow"><span>محاكاة انقطاع الاتصال</span><button class="toggle" role="switch" aria-checked="${S.offline}" data-a="offline" aria-label="محاكاة انقطاع الاتصال"></button></div></div>
+  <div class="pbox"><div class="trow"><h2>مسارات الاختبار (النشاط 3.3)</h2><span class="prog">${done}/8</span></div><ul class="plist">${PATHS.map(([l,k],i)=>{const n=k.filter(x=>S.paths[x]).length;const st=n===k.length?'done':n?'half':'';return `<li><span class="pdot ${st}">${st==='done'?'✓':i+1}</span><span>${l}</span></li>`}).join('')}</ul><p style="font-size:12px">تُعلَّم المسارات تلقائياً عند تنفيذها داخل النموذج.</p></div>
+  <div class="pbox"><h2>سيناريو ${S.persona==='sara'?'سارة':'أمين'} (النشاط 3.4)</h2><ol class="steps">${SCEN[S.persona].map(s=>`<li>${s}</li>`).join('')}</ol><div class="trow"><span style="font-size:12px;color:var(--muted)">اليوم في النموذج: الثلاثاء 10/11/2026</span><button class="lnkbtn" data-a="resetall">إعادة البيانات</button></div></div>`;
+}
+window.addEventListener('resize',()=>render());
+render();
+})();
+</script>
+
+</body>
+</html>
